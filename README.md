@@ -1,8 +1,8 @@
 # MSITS_WSUS_DCS
  Decentral Store WSUS Automation Repo
-# PSWindowsUpdate
+- PSWindowsUpdate
 WSUS Update Module
-# ServerUptime
+- ServerUptime
 Server Info collection script
-# WSUS_Update_check.xml
+- WSUS_Update_check.xml
 Automated Task export
