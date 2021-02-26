@@ -19,6 +19,7 @@ exit
 
 'Running with Elevated Admin privileges'
 
+#Determine running dir
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
  
 #Write-Host "Current script directory is $ScriptDir"
@@ -63,7 +64,7 @@ Write-Output $result | Format-Table -AutoSize
 
 }
 
- Get-UpTimeAllServer #| Out-File "E:\Scripts\ServerUptime\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.log" -force
+ Get-UpTimeAllServer | Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.log" -force
 
 Write-Host -NoNewLine 'Press any key to continue...';
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
