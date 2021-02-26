@@ -1,0 +1,1 @@
+Install-WindowsUpdate -AcceptAll -Install | Out-File "C:\temp\wsus\wsus_logs\$(get-date -f yyyy-MM-dd)-WindowsUpdate.log" -force
