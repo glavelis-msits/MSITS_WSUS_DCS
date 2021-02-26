@@ -7,10 +7,10 @@ Write-Host "Current script directory is $ScriptDir"
 Invoke-WUJob -ComputerName mst04trmmm1-1.mmsrg.net -Script {[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; ipmo PSWindowsUpdate -Force | Out-File C:\temp\PSWindowsUpdate_installation.log } -Confirm:$false -Verbose -RunNow
 
 #Local install WUpdate
-Install-WindowsUpdate -AcceptAll -Install -AutoReboot | Out-File "C:\temp\wsus_logs\$(get-date -f yyyy-MM-dd)-WindowsUpdate.log" -force
+Install-WindowsUpdate -AcceptAll -Install -AutoReboot | Out-File "C:\temp\wsus_logs\$(get-date -f dd-MM-yyyy)-WindowsUpdate.log" -force
 
 #Set executionpolicy
-Set-ExecutionPolicy Bypass -Scope Process ; Install-WindowsUpdate -AcceptAll -Install | Out-File "C:\temp\wsus_logs\$(get-date -f yyyy-MM-dd)-WindowsUpdate.log" -force
+Set-ExecutionPolicy Bypass -Scope Process ; Install-WindowsUpdate -AcceptAll -Install | Out-File "C:\temp\wsus_logs\$(get-date -f dd-MM-yyyy)-WindowsUpdate.log" -force
 
 ########################
 #Set Trusted Hosts
@@ -48,7 +48,7 @@ $computer = Get-Content E:\Scripts\serverlist.txt
 
 #Install Available updates with reboot
 Invoke-WUJob -ComputerName $computer -Script {Install-WindowsUpdate -AcceptAll -AutoReboot | Out-File C:\temp\wsus_logs\PSWindowsUpdate.log } -RunNow -Confirm:$false
-Invoke-WUJob -ComputerName $computer -Script {Install-WindowsUpdate -AcceptAll -AutoReboot | Out-File "C:\temp\wsus_logs\$(get-date -f yyyy-MM-dd)-WindowsUpdate.log" -force} -RunNow -Confirm:$false
+Invoke-WUJob -ComputerName $computer -Script {Install-WindowsUpdate -AcceptAll -AutoReboot | Out-File "C:\temp\wsus_logs\$(get-date -f dd-MM-yyyy)-WindowsUpdate.log" -force} -RunNow -Confirm:$false
 
 Install-WindowsUpdate -ComputerName BDH04TRMMM1-1.mmsrg.net -MicrosoftUpdate -AcceptAll -IgnoreReboot -SendReport –PSWUSettings @{SmtpServer="smtprelay.media-saturn.com";From="wsus_updater@media-saturn.com";To="glavelis@media-saturn.com";Port=25} -Verbose
 Invoke-WUJob -ComputerName $computer -Script {Install-WindowsUpdate -AcceptAll - IgnoreReboot -SendReport –PSWUSettings @{SmtpServer="smtprelay.media-saturn.com";From="wsus_updater@media-saturn.com";To="glavelis@media-saturn.com";Port=25} -Verbose }
