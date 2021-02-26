@@ -1,0 +1,22 @@
+• Clear-WUJob – use the Get-WUJob to call the WUJob in Task Scheduler;
+• Download-WindowsUpdate (alias for Get-WindowsUpdate –Download) — get a list of updates and download them;
+• Get-WUInstall, Install-WindowsUpdate (alias for Get-WindowsUpdate –Install) – install updates;
+• Hide-WindowsUpdate (alias for Get-WindowsUpdate -Hide:$false) – hide update;
+• Uninstall-WindowsUpdate – remove update using Remove-WindowsUpdate;
+• Add-WUServiceManager – register the update server (Windows Update Service Manager) on the computer;
+• Enable-WURemoting — enable Windows firewall rules to allow remote use of the PSWindowsUpdate cmdlets;
+• Get-WindowsUpdate (Get-WUList) — displays a list of updates that match the specified criteria, allows you to find and install the updates. This is the main cmdlet of the PSWindowsUpdate module. Allows to download and install updates from a WSUS server or Microsoft Update. Allows you to select update categories, specific updates and set the rules of a computer restart when installing the updates;
+• Get-WUApiVersion – get the Windows Update Agent version on the computer;
+• Get-WUHistory – display a list of installed updates (update history);
+• Get-WUInstallerStatus — check the Windows Installer service status;
+• Get-WUJob – run WUJob update tasks in the Task Scheduler;
+• Get-WULastResults — dates of the last search and installation of updates (LastSearchSuccessDate and LastInstallationSuccessDate);
+• Get-WURebootStatus — allows you to check whether a reboot is needed to apply a specific update;
+• Get-WUServiceManager – list update sources;
+• Get-WUSettings – get Windows Update client settings;
+• Invoke-WUJob – remotely call WUJobs jobs in the Task Scheduler to immediately execute PSWindowsUpdate commands;
+• Remove-WindowsUpdate – allows to uninstall an update by KB ID;
+• Remove-WUServiceManager – disable Windows Update Service Manager;
+• Set-PSWUSettings – save PSWindowsUpdate module settings to the XML file;
+• Set-WUSettings – configure Windows Update client settings;
+• Update-WUModule – update the PSWindowsUpdate module version (you can update the module on a remote computer by copying it from the current one, or updating from PSGallery).
