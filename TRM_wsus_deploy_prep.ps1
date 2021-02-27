@@ -9,7 +9,7 @@ $sourcePath_WSUS_Update_check_xml = "$ScriptDir\TRM_WSUS_Weekly_Update.xml"
 $destPath_WSUS_Update_check_xml = "C:\temp\wsus"
 #$checkmkHost = (Get-ItemProperty -path 'HKLM:\SOFTWARE\WoW6432Node\Microsoft\RebootByMGS').CheckMKObject
 
-$servers = Get-Content "$ScriptDir\serverlist.txt"
+$servers = "$ScriptDir\serverlist.txt"
 
 
 Get-Content $servers| ForEach-Object {
@@ -35,7 +35,7 @@ Get-Content $servers| ForEach-Object {
     }
 
 # Copy Task Schedule xml	
-Get-Content $servers| ForEach-Object-Object {
+Get-Content $servers| ForEach-Object {
     $Session = New-PSSession -ComputerName "$_" ;
     copy-item -Path $sourcePath_WSUS_Update_check_xml -Destination $destPath_WSUS_Update_check_xml -recurse -ToSession $Session -Force
     }
