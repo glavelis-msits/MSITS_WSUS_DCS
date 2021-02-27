@@ -7,14 +7,11 @@ $sourcePath_wsus_local_update_noreboot = "$ScriptDir\TRM_wsus_local_update_reboo
 $destPath_wsus_local_update_noreboot = "C:\tasks"
 $sourcePath_WSUS_Update_check_xml = "$ScriptDir\TRM_WSUS_Weekly_Update.xml"
 $destPath_WSUS_Update_check_xml = "C:\temp\wsus"
-#$checkmkHost = (Get-ItemProperty -path 'HKLM:\SOFTWARE\WoW6432Node\Microsoft\RebootByMGS').CheckMKObject
-
 $servers = "$ScriptDir\serverlist.txt"
 
 
 Get-Content $servers| ForEach-Object {
-    #$Session = New-PSSession -ComputerName "$_" ;
-	Invoke-Command -ComputerName "$_" -ScriptBlock {
+Invoke-Command -ComputerName "$_" -ScriptBlock {
 New-Item -ItemType Directory -Force -Path C:\tasks;
 New-Item -ItemType Directory -Force -Path C:\temp\wsus;
 New-Item -ItemType Directory -Force -Path C:\temp\wsus\wsus_logs;
@@ -23,10 +20,10 @@ New-Item -ItemType Directory -Force -Path C:\temp\wsus\wsus_logs;
     }
 
 # Copy PSwindowsUpdate Module
-Get-Content $servers| ForEach-Object {
+Get-Content $servers | ForEach-Object {
     $Session = New-PSSession -ComputerName "$_" ;
     copy-item -Path $sourcePath_PSWU -Destination $destPath_PSWU -recurse -ToSession $Session -Force
-    }
+}
 	
 # Copy PSWU update script	
 Get-Content $servers| ForEach-Object {

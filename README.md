@@ -7,7 +7,7 @@ Server Info collection script
 - WSUS_Update_check.xml |
 Automated Task export
 
-Steps to betaken:
+Steps to be taken:
 Create folder structure
     C:\tasks
     C:\temp\wsus
