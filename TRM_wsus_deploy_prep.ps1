@@ -1,13 +1,14 @@
 ﻿Clear-Host
 #Vars
-$sourcePath_PSWU = "E:\Scripts\PSWindowsUpdate"
+$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+$sourcePath_PSWU = "$ScriptDir\PSWindowsUpdate"
 $destPath_PSWU = "C:\Program Files\WindowsPowerShell\Modules"
-$sourcePath_wsus_local_update_noreboot = "E:\Scripts\WSUS\wsus_local_update_noreboot.ps1"
+$sourcePath_wsus_local_update_noreboot = "$ScriptDir\TRM_wsus_local_update_reboot.ps1"
 $destPath_wsus_local_update_noreboot = "C:\tasks"
-$sourcePath_WSUS_Update_check_xml = "E:\Scripts\WSUS\WSUS_Update_check.xml"
+$sourcePath_WSUS_Update_check_xml = "$ScriptDir\WSUS_Update_check.xml"
 $destPath_WSUS_Update_check_xml = "C:\temp\wsus"
 #$checkmkHost = (Get-ItemProperty -path 'HKLM:\SOFTWARE\WoW6432Node\Microsoft\RebootByMGS').CheckMKObject
-$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+
 $servers = Get-Content "$ScriptDir\serverlist.txt"
 
 

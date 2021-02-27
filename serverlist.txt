@@ -1,6 +1,8 @@
 BDH04TRMMM1-1.mmsrg.net
 BER04TRMSE2-1.mmsrg.net
 BMO04TRMMM1-1.mmsrg.net
+DEG04TRMMM1-1.mmsrg.net
+FLE04TRMMM1-1.mmsrg.net
 FUL04TRMMM1-1.mmsrg.net
 GOE04TRMMM1-1.mmsrg.net
 ING04TRMSE1-1.mmsrg.net
