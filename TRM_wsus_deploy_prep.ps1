@@ -5,7 +5,7 @@ $sourcePath_PSWU = "$ScriptDir\PSWindowsUpdate"
 $destPath_PSWU = "C:\Program Files\WindowsPowerShell\Modules"
 $sourcePath_wsus_local_update_noreboot = "$ScriptDir\TRM_wsus_local_update_reboot.ps1"
 $destPath_wsus_local_update_noreboot = "C:\tasks"
-$sourcePath_WSUS_Update_check_xml = "$ScriptDir\WSUS_Update_check.xml"
+$sourcePath_WSUS_Update_check_xml = "$ScriptDir\TRM_WSUS_Weekly_Update.xml"
 $destPath_WSUS_Update_check_xml = "C:\temp\wsus"
 #$checkmkHost = (Get-ItemProperty -path 'HKLM:\SOFTWARE\WoW6432Node\Microsoft\RebootByMGS').CheckMKObject
 
@@ -43,7 +43,7 @@ Get-Content $servers| ForEach-Object-Object {
 #Create Scheduled Task
 Get-Content $servers| ForEach-Object {
     #$Session = New-PSSession -ComputerName "$_" ;
-	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy Bypass -Scope Process ; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\WSUS_Update_check.xml' | Out-String) -TaskName "WSUS Weekly Update check" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password isRIvx0Vbu5V61nEnq56 –Force}
+	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy Bypass -Scope Process ; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\TRM_WSUS_Weekly_Update.xml' | Out-String) -TaskName "TRM WSUS Weekly Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password isRIvx0Vbu5V61nEnq56 –Force}
     }
 
     
