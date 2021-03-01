@@ -76,7 +76,7 @@ Write-Output $result | Format-Table -AutoSize
 
 }
 
- Get-UpTimeAllServer #| Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.log" -force
+ Get-UpTimeAllServer | Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.log" -force
 
 Write-Host -NoNewLine 'Press any key to continue...';
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
