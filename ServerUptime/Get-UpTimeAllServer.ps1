@@ -26,7 +26,7 @@ $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 
 function Get-UpTimeAllServer {
 
-$servers= Get-Content "$ScriptDir\serverlist.txt"
+$servers= Get-Content "$ScriptDir\FQDNList.txt"
 $result=@()
 
 Foreach ($s in $servers) {
