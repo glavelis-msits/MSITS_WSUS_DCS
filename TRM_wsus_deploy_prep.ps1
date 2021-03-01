@@ -7,7 +7,7 @@ $sourcePath_wsus_local_update_noreboot = "$ScriptDir\TRM_wsus_local_update_reboo
 $destPath_wsus_local_update_noreboot = "C:\tasks"
 $sourcePath_WSUS_Update_check_xml = "$ScriptDir\TRM_WSUS_Weekly_Update.xml"
 $destPath_WSUS_Update_check_xml = "C:\temp\wsus"
-$servers = "$ScriptDir\serverlist.txt"
+$servers = "$ScriptDir\FQDNList.txt"
 
 
 Get-Content $servers| ForEach-Object {

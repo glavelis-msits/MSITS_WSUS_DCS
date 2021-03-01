@@ -18,3 +18,5 @@ Get-Content $ScriptDir\serverlist.txt | ForEach-Object -Begin {
 } -Process {
     Add-Content -Path $ScriptDir\FQDNList.txt -Value (Get-FQDN $_)
 }
+
+cp E:\Scripts\MSITS_WSUS_DCS\ServerUptime\FQDNList.txt E:\Scripts\MSITS_WSUS_DCS
