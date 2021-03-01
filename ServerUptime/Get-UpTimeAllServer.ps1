@@ -36,15 +36,27 @@ $rebootpending = ((Get-WURebootStatus -ComputerName $s -Confirm:$false).RebootRe
 $checkmkHost = Invoke-Command -ComputerName $s {(Get-ItemProperty -path 'HKLM:\SOFTWARE\WoW6432Node\Microsoft\RebootByMGS').CheckMKObject}
 $up=(Get-CimInstance -ClassName win32_operatingsystem -ComputerName $s -ErrorAction Stop).LastBootUpTime 
 $uptime=((Get-Date) - $up)
-$wsustask = Invoke-Command -ComputerName $s {(Get-ScheduledTask | Where-Object {$_.TaskName -like "*WSUS*"}).State}
+$trm_powercycle_path = "\\$s\c$\tasks\TRM_weekly_powercycle.ps1"
+$trm_powercycle = if (Test-Path $trm_powercycle_path -PathType leaf) 
+{"TRM Pwrccl Exists"}
+else
+{"TRM Pwrccl missing"}
+$trm_wsupdrb_path = "\\$s\c$\tasks\TRM_wsus_local_update_reboot.ps1"
+$trm_wsupdrb = if (Test-Path $trm_wsupdrb_path -PathType leaf) 
+{"TRM Update Exists"}
+else
+{"TRM Update missing"}
+$wsustask = Invoke-Command -ComputerName $s {(Get-ScheduledTask | Where-Object {$_.TaskName -like "*TRM*"}).State}
 $result+=New-Object -TypeName PSObject -Property ([ordered]@{
 'Server'=$s
 'CheckMK ID'=$checkmkHost
-'LastBootUpTime'=$up
-'Days'=$uptime.Days
+#'LastBootUpTime'=$up
+'Uptime - Days'=$uptime.Days
 'Hours'=$uptime.Hours
 #'Minutes'=$uptime.Minutes
 #'Seconds'=$uptime.Seconds
+'TRM Powercycle' = $trm_powercycle
+'TRM Update' = $trm_wsupdrb
 'WSUS Task' = $wsustask
 'Reboot pending' = $rebootpending
 })
@@ -64,7 +76,7 @@ Write-Output $result | Format-Table -AutoSize
 
 }
 
- Get-UpTimeAllServer | Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.log" -force
+ Get-UpTimeAllServer #| Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.log" -force
 
 Write-Host -NoNewLine 'Press any key to continue...';
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');

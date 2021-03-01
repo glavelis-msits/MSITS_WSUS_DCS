@@ -64,5 +64,3 @@ Get-Content $servers| ForEach-Object {
     #$Session = New-PSSession -ComputerName "$_" ;
 	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy Bypass -Scope Process ; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\TRM_weekly_powercycle.xml' | Out-String) -TaskName "TRM_weekly_powercycle" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password isRIvx0Vbu5V61nEnq56 –Force}
     }
-
-    
