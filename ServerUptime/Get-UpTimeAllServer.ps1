@@ -77,6 +77,7 @@ Write-Output $result | Format-Table -AutoSize
 }
 
 Get-UpTimeAllServer | Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.log" -force
+#Get-UpTimeAllServer |  ConvertTo-Html | Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.html" -force
 #Get-UpTimeAllServer | Export-Csv -Path "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.csv" -Encoding ascii -NoTypeInformation
 
 Write-Host -NoNewLine 'Press any key to continue...';
