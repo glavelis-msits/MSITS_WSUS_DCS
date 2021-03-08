@@ -8,4 +8,4 @@ Invoke-WebRequest -Uri "https://ffm04mannws13p/INFMON01/check_mk/view.py?_do_con
 Start-Sleep -Seconds 60
 
 #Reboot Server
-Restart-Computer –delay 15
+Restart-Computer
