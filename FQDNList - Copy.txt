@@ -53,18 +53,10 @@ ESN04APPMM1-1.mmsrg.net
 ESS04APPSE1-1.mmsrg.net
 ESS04APPSE2-1.mmsrg.net
 EUS04APPSE1-1.mmsrg.net
-FFM04DCC001.media-saturn.com
-FFM04DCC002.media-saturn.com
-ING04DCC005.media-saturn.com
-ING04DCC006.media-saturn.com
-ING04DCC007.media-saturn.com
-ING04DCC008.media-saturn.com
 FFM04APPMM1-1.mmsrg.net
-FFM04APPMM2-1.org.media-saturn.net
 FFM04APPSE2-1.mmsrg.net
 FFM04APPSE3-1.mmsrg.net
 FLE04APPMM1-1.mmsrg.net
-FRE04APPSE1-1.org.media-saturn.net
 FRS04APPSE1-1.mmsrg.net
 FUE04APPSE1-1.mmsrg.net
 FUL04APPMM1-1.mmsrg.net
@@ -89,11 +81,6 @@ HNA04APPSE1-1.mmsrg.net
 HOL04APPMM1-1.mmsrg.net
 HTT04APPSE1-1.mmsrg.net
 HUE04APPSE1-1.mmsrg.net
-ING04DCC001.media-saturn.com
-ING04DCC002.media-saturn.com
-ING04DCC003.media-saturn.com
-ING04DCC004.media-saturn.com
-ING04DCR001.media-saturn.com
 ING04APPSE1-1.mmsrg.net
 IOS04APPMM1-1.mmsrg.net
 ISE04APPSE1-1.mmsrg.net
@@ -116,7 +103,6 @@ LBK04APPMM1-1.mmsrg.net
 LBK04APPSE1-1.mmsrg.net
 LBK04APPSE2-1.mmsrg.net
 LBL04APPMM1-1.mmsrg.net
-LBU04APPSE1-1.org.media-saturn.net
 LDS04APPSE1-1.mmsrg.net
 LEB04APPSE1-1.mmsrg.net
 LEI04APPSE2-1.mmsrg.net
@@ -130,9 +116,7 @@ MAG04APPSE1-1.mmsrg.net
 MAH04APPSE1-1.mmsrg.net
 MAI04APPSE1-1.mmsrg.net
 MAR04APPSE1-1.mmsrg.net
-MOE04APPSE3-1.mmsrg.net
 MRS04APPSE1-1.mmsrg.net
-MST04APPMM1-1.org.media-saturn.net
 MST04APPSE1-1.mmsrg.net
 MST04APPSE2-1.mmsrg.net
 MUE04APPSE1-1.mmsrg.net
@@ -159,7 +143,6 @@ RBG04APPMM1-1.mmsrg.net
 REG04APPMM1-1.mmsrg.net
 REG04APPSE1-1.mmsrg.net
 REM04APPSE1-1.mmsrg.net
-RHN04APPMM1-1.org.media-saturn.net
 ROH04APPMM1-1.mmsrg.net
 ROS04APPSE1-1.mmsrg.net
 SEN04APPSE1-1.mmsrg.net

@@ -16,3 +16,4 @@ SEN04TRMSE1-1.org.media-saturn.net
 SZB04TRMMM1-1.org.media-saturn.net
 WIE04TRMSE2-1.org.media-saturn.net
 US04TRMSE1-1 not found
+ING04TRMSE1-1.mmsrg.net (no checkmk id)
