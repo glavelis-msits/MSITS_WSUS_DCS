@@ -22,3 +22,12 @@ Create deployment lists
 Graceful shutdown of SolidDB Server
 
 Run Update
+
+#######################
+App - DBA Server Test Group Created
+App Servers will be Updated on every first Tuesday of the Month at 04:00 CET
+DBA Servers will be Updated on every first Thursday of the Month at 04:00 CET
+
+ToDo:
+Add PSVersion check (min 5.1)
+Create SolidDB Service account (DBA Servers)

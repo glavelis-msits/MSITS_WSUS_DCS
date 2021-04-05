@@ -5,7 +5,7 @@ $sourcePath_PSWU = "$ScriptDir\PSWindowsUpdate"
 $destPath_PSWU = "C:\Program Files\WindowsPowerShell\Modules"
 $sourcePath_wsus_local_update_noreboot = "$ScriptDir\APP_DE_wsus_local_update_reboot.ps1"
 $destPath_wsus_local_update_noreboot = "C:\tasks"
-$sourcePath_WSUS_Update_check_xml = "$ScriptDir\APP_DE_WSUS_Monthly_Update.xml"
+$sourcePath_WSUS_Update_check_xml = "$ScriptDir\APP_DE_Test_Group_WSUS_Monthly_Update.xml"
 $destPath_WSUS_Update_check_xml = "C:\temp\wsus"
 #$sourcePath_TRM_weekly_powercycle_xml = "$ScriptDir\TRM_weekly_powercycle.xml"
 #$destPath_TRM_weekly_powercycle_xml = "C:\temp\wsus"
@@ -56,7 +56,7 @@ Get-Content $servers| ForEach-Object {
 #Create Scheduled Task APP_DE_WSUS_Monthly_Update
 Get-Content $servers| ForEach-Object {
     #$Session = New-PSSession -ComputerName "$_" ;
-	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_DE_WSUS_Monthly_Update.xml' | Out-String) -TaskName "APP_DE_WSUS_Monthly_Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password isRIvx0Vbu5V61nEnq56 –Force}
+	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_DE_Test_Group_WSUS_Monthly_Update.xml' | Out-String) -TaskName "APP_DE_Test_Group_WSUS_Monthly_Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password isRIvx0Vbu5V61nEnq56 –Force}
     }
 
 #Create Scheduled Task TRM_weekly_powercycle
