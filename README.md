@@ -1,64 +1,53 @@
-# MSITS_WSUS_DCS
- Decentral Store WSUS Automation Repo
-- PSWindowsUpdate |
-WSUS Update Module
-- ServerUptime |
-Server Info collection script
-- WSUS_Update_check.xml |
-Automated Task export
-
-Steps to take:
-Create folder structure
-    C:\tasks
-    C:\temp\wsus
-    C:\wsus\wsus_logs
-
-Deploy WSUS Update module (Path C:\Program Files\WindowsPowerShell\Modules)
-
-Run deploy_prep (Maintenance mode added)
-
-Create deployment lists
-
-Graceful shutdown of SolidDB Server
-
-Run Update
-
-#######################
-DE TRMs are updated every Sunday at 04:00 and rebooted every Monday at 04:00
-DE App/DC - DBA Server Test Group Created
-Test Group DE App/DC Servers will be Updated on every first Tuesday of the Month at 04:00 CET
-Test Group DE DBA Servers will be Updated on every first Thursday of the Month at 04:00 CET
-
-ToDo:
-Create SolidDB Service account (DBA Servers)
-
-
-Scripts:
-APP/DC Specific:
-APP_DE_wsus_deploy_prep_v1.3.ps1
-APP_DE_deploy_Tasks.ps1
-APP_DE_reboot.ps1
-APP_DE_reboot.xml
-APP_DE_wsus_local_update_reboot.ps1
-APP_DE_WSUS_Monthly_Update.xml
-
-TRM_DE Specific:
-TRM_deploy_Tasks.ps1
-TRM_weekly_powercycle.ps1
-TRM_weekly_powercycle.xml
-TRM_wsus_deploy_prep.ps1
-TRM_wsus_local_update_no_reboot_w_report.ps1
-TRM_wsus_local_update_reboot.ps1
-TRM_WSUS_Weekly_Update.xml
-
-DBA_DE Specific:
-
-General purpose:
-Reboot_scheduler    
-Task_removal
-Reporting\ServerUptime\Get_UpTime_APP_DE_Server.ps1
-Reporting\ServerUptime\Get-FQDN.ps1
-Reporting\ServerUptime\Get-UpTime_TRM_DE_Server.ps1
-Reporting\ServerUptime\serverlist.txt
-Reporting\ServerUptime\FQDNList.txt
-Reporting\AD\DE_serverlists.ps1
+<!-- #######  YAY, I AM THE SOURCE EDITOR! #########-->
+<p><strong>#&nbsp;MSITS_WSUS_DCS</strong></p>
+<p style="text-align: center;"><span style="text-decoration: underline;"><strong>&nbsp;Decentral&nbsp;Store&nbsp;WSUS&nbsp;Automation&nbsp;Repo</strong></span></p>
+<p><span style="text-decoration: underline;"><strong>Scripts:</strong></span></p>
+<p><span style="text-decoration: underline;"><strong>APP/DC&nbsp;Specific:</strong></span></p>
+<ul>
+<li>APP_DE_wsus_deploy_prep_v1.3.ps1</li>
+<li>APP_DE_deploy_Tasks.ps1</li>
+<li>APP_DE_reboot.ps1</li>
+<li>APP_DE_reboot.xml</li>
+<li>APP_DE_wsus_local_update_reboot.ps1</li>
+<li>APP_DE_WSUS_Monthly_Update.xml</li>
+</ul>
+<p>&nbsp;</p>
+<p><span style="text-decoration: underline;"><strong>TRM_DE&nbsp;Specific:</strong></span></p>
+<ul>
+<li>TRM_deploy_Tasks.ps1</li>
+<li>TRM_weekly_powercycle.ps1</li>
+<li>TRM_weekly_powercycle.xml</li>
+<li>TRM_wsus_deploy_prep.ps1</li>
+<li>TRM_wsus_local_update_no_reboot_w_report.ps1</li>
+<li>TRM_wsus_local_update_reboot.ps1</li>
+<li>TRM_WSUS_Weekly_Update.xml</li>
+</ul>
+<p>&nbsp;</p>
+<p><span style="text-decoration: underline;"><strong>DBA_DE&nbsp;Specific:</strong></span></p>
+<p>&nbsp;</p>
+<p><span style="text-decoration: underline;"><strong>General&nbsp;purpose:</strong></span></p>
+<ul>
+<li>Reboot_scheduler&nbsp;&nbsp;&nbsp;&nbsp;</li>
+<li>Task_removal</li>
+<li>Reporting\ServerUptime\Get_UpTime_APP_DE_Server.ps1</li>
+<li>Reporting\ServerUptime\Get-FQDN.ps1</li>
+<li>Reporting\ServerUptime\Get-UpTime_TRM_DE_Server.ps1</li>
+<li>Reporting\ServerUptime\serverlist.txt</li>
+<li>Reporting\ServerUptime\FQDNList.txt</li>
+<li>Reporting\AD\DE_serverlists.ps1</li>
+</ul>
+<p>&nbsp;</p>
+<p><span style="text-decoration: underline;"><strong>Schaduled Tasks</strong></span></p>
+<ul>
+<li>DE&nbsp;TRMs&nbsp;are&nbsp;updated&nbsp;every&nbsp;Sunday&nbsp;at&nbsp;04:00&nbsp;and&nbsp;rebooted&nbsp;every&nbsp;Monday&nbsp;at&nbsp;04:00</li>
+<li>DE&nbsp;App/DC&nbsp;-&nbsp;DBA&nbsp;Server&nbsp;Test&nbsp;Group&nbsp;Created</li>
+<li>Test&nbsp;Group&nbsp;DE&nbsp;App/DC&nbsp;Servers&nbsp;will&nbsp;be&nbsp;Updated&nbsp;on&nbsp;every&nbsp;first&nbsp;Tuesday&nbsp;of&nbsp;the&nbsp;Month&nbsp;at&nbsp;04:00&nbsp;CET</li>
+<li>Test&nbsp;Group&nbsp;DE&nbsp;DBA&nbsp;Servers&nbsp;will&nbsp;be&nbsp;Updated&nbsp;on&nbsp;every&nbsp;first&nbsp;Thursday&nbsp;of&nbsp;the&nbsp;Month&nbsp;at&nbsp;04:00&nbsp;CET</li>
+</ul>
+<p>&nbsp;</p>
+<p><span style="text-decoration: underline;"><strong>ToDo:</strong></span></p>
+<ul>
+<li>Create&nbsp;SolidDB&nbsp;Service&nbsp;account&nbsp;(DBA&nbsp;Servers)</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
