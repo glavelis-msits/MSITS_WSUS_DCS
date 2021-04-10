@@ -3,7 +3,7 @@ $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 
 function ServerList-DE_APP {
 
-$latest_app_de_path = "E:\Scripts\MSITS_WSUS_DCS\Reporting\AD\DE_serverlists_reports"
+$latest_app_de_path = "$ScriptDir\DE_serverlists_reports"
 $latest_app_de_list = (Get-ChildItem -Path $latest_app_de_path -filter *APP* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name
 $latest_app_de_list_output = Get-Content $latest_app_de_path\$latest_app_de_list
 $latest_app_de_list_output  | Select-Object -Skip 3 | Out-File $latest_app_de_path\"clean_"$latest_app_de_list
@@ -12,20 +12,20 @@ $latest_app_de_list_output  | Select-Object -Skip 3 | Out-File $latest_app_de_pa
 
 function ServerList-DE_DBA {
 
-$latest_app_de_path = "E:\Scripts\MSITS_WSUS_DCS\Reporting\AD\DE_serverlists_reports"
-$latest_app_de_list = (Get-ChildItem -Path $latest_app_de_path -filter *DBA* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name
-$latest_app_de_list_output = Get-Content $latest_app_de_path\$latest_app_de_list
-$latest_app_de_list_output  | Select-Object -Skip 3 | Out-File $latest_app_de_path\"clean"$latest_app_de_list
+$latest_dba_de_path = "$ScriptDir\DE_serverlists_reports"
+$latest_dba_de_list = (Get-ChildItem -Path $latest_dba_de_path -filter *DBA* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name
+$latest_dba_de_list_output = Get-Content $latest_dba_de_path\$latest_dba_de_list
+$latest_dba_de_list_output  | Select-Object -Skip 3 | Out-File $latest_dba_de_path\"clean_"$latest_dba_de_list
 
 }
 
 
 function ServerList-DE_TRM {
 
-$latest_app_de_path = "E:\Scripts\MSITS_WSUS_DCS\Reporting\AD\DE_serverlists_reports"
-$latest_app_de_list = (Get-ChildItem -Path $latest_app_de_path -filter *TRM* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name
-$latest_app_de_list_output = Get-Content $latest_app_de_path\$latest_app_de_list
-$latest_app_de_list_output  | Select-Object -Skip 3 | Out-File $latest_app_de_path\"clean"$latest_app_de_list
+$latest_trm_de_path = "$ScriptDir\DE_serverlists_reports"
+$latest_trm_de_list = (Get-ChildItem -Path $latest_trm_de_path -filter *TRM* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name
+$latest_trm_de_list_output = Get-Content $latest_trm_de_path\$latest_trm_de_list
+$latest_trm_de_list_output  | Select-Object -Skip 3 | Out-File $latest_trm_de_path\"clean_"$latest_trm_de_list
 
 }
 
