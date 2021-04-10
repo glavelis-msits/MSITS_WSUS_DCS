@@ -1,5 +1,5 @@
 <!-- #######  YAY, I AM THE SOURCE EDITOR! #########-->
-<p><strong>#&nbsp;MSITS_WSUS_DCS</strong></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Media-saturn-logo.svg" alt="Media-Saturn IT Services GmbH" width="400" height="70" /></p>
 <p style="text-align: center;"><span style="text-decoration: underline;"><strong>&nbsp;Decentral&nbsp;Store&nbsp;WSUS&nbsp;Automation&nbsp;Repo</strong></span></p>
 <p><span style="text-decoration: underline;"><strong>Scripts:</strong></span></p>
 <p><span style="text-decoration: underline;"><strong>APP/DC&nbsp;Specific:</strong></span></p>
