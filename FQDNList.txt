@@ -1,4 +1,1 @@
-AMB04APPMM1-1.mmsrg.net
-ANS04APPSE1-1.mmsrg.net
-ASB04APPMM1-1.mmsrg.net
-ASB04APPMM2-1.mmsrg.net
+AAC04APPSE1-1.mmsrg.net
