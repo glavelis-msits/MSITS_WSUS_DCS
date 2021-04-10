@@ -37,7 +37,7 @@
 <li>Reporting\AD\DE_serverlists.ps1</li>
 </ul>
 <p>&nbsp;</p>
-<p><span style="text-decoration: underline;"><strong>Schaduled Tasks</strong></span></p>
+<p><span style="text-decoration: underline;"><strong>Scheduled Tasks</strong></span></p>
 <ul>
 <li>DE&nbsp;TRMs&nbsp;are&nbsp;updated&nbsp;every&nbsp;Sunday&nbsp;at&nbsp;04:00&nbsp;and&nbsp;rebooted&nbsp;every&nbsp;Monday&nbsp;at&nbsp;04:00</li>
 <li>DE&nbsp;App/DC&nbsp;-&nbsp;DBA&nbsp;Server&nbsp;Test&nbsp;Group&nbsp;Created</li>
