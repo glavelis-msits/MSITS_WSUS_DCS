@@ -23,10 +23,14 @@ exit
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
  
 #Write-Host "Current script directory is $ScriptDir"
+$latest_trm_de_path = "$ScriptDir\DE_serverlists_reports"
+$latest_trm_de_list = (Get-ChildItem -Path $latest_trm_de_path -filter *clean*TRM* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name
+#$latest_trm_de_list_output = Get-Content $latest_trm_de_path\$latest_trm_de_list
 
 function Get-UpTimeAllServer {
 
-$servers= Get-Content "$ScriptDir\FQDNList.txt"
+#$servers= Get-Content "$ScriptDir\FQDNList.txt"
+$servers= Get-Content $latest_trm_de_path\$latest_trm_de_list
 $result=@()
 
 Foreach ($s in $servers) {
