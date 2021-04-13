@@ -12,10 +12,15 @@ $sourcePath_APP_DE_powercycle = "$ScriptDir\APP_DE_reboot.ps1"   							#Local P
 $destPath_APP_DE_powercycle = "C:\tasks" 													#Powercycle script destination	
 $sourcePath_APP_DE_reboot_xml = "$ScriptDir\APP_DE_reboot.xml" 								#Scheduled Reboot Task local xml path
 $destPath_APP_DE_reboot_xml = "C:\temp\wsus"     											#Reboot Task xml destination
-$servers = "$ScriptDir\FQDNList.txt"														#Server List
-$taskfolder = "C:\tasks"																	#Tasks folder path
-$wsusfolder = "C:\temp\wsus"																#WSUS folder path
-$wsuslogfolder = "C:\temp\wsus\wsus_logs"													#WSUS update logs folder
+#$servers = "$ScriptDir\FQDNList.txt"														#Server List
+$servers = $latest_app_de_list                                                              #Server List (new)
+#$taskfolder = "C:\tasks"																	#Tasks folder path
+#$wsusfolder = "C:\temp\wsus"																#WSUS folder path
+#$wsuslogfolder = "C:\temp\wsus\wsus_logs"													#WSUS update logs folder
+$latest_app_de_path = "$ScriptDir\Reporting\ServerUptime\DE_serverlists_reports"            #Server List path
+$latest_app_de_list = (Get-ChildItem -Path $latest_app_de_path -filter *clean*APP* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name # Select the latest APP/DC list
+
+
 
 #Create Destination Folders
 Get-Content $servers| ForEach-Object {

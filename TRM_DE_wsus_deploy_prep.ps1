@@ -11,7 +11,11 @@ $sourcePath_TRM_weekly_powercycle_xml = "$ScriptDir\TRM_weekly_powercycle.xml"
 $destPath_TRM_weekly_powercycle_xml = "C:\temp\wsus"
 $sourcePath_TRM_weekly_powercycle = "$ScriptDir\TRM_weekly_powercycle.ps1"
 $destPath_TRM_weekly_powercycle = "C:\tasks"
-$servers = "$ScriptDir\FQDNList.txt"
+#$servers = "$ScriptDir\FQDNList.txt"
+$servers = $latest_trm_de_list
+$latest_trm_de_path = "$ScriptDir\Reporting\ServerUptime\DE_serverlists_reports"            #Server List path
+$latest_trm_de_list = (Get-ChildItem -Path $latest_trm_de_path -filter *clean*TRM* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name # Select the latest TRM list
+
 
 #Create Destination Folders
 Get-Content $servers| ForEach-Object {

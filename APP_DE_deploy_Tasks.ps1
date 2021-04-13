@@ -1,8 +1,11 @@
-﻿$servers = "E:\Scripts\MSITS_WSUS_DCS\FQDNList.txt"
+﻿#$servers = "E:\Scripts\MSITS_WSUS_DCS\FQDNList.txt"
 $sourcePath_WSUS_Update_check_xml = "E:\Scripts\MSITS_WSUS_DCS\APP_DE_WSUS_Monthly_Update.xml"
 $destPath_WSUS_Update_check_xml = "C:\temp\wsus"
 #$sourcePath_TRM_weekly_powercycle_xml = "E:\Scripts\MSITS_WSUS_DCS\TRM_weekly_powercycle.xml"
 #$destPath_TRM_weekly_powercycle_xml = "C:\temp\wsus"
+$latest_app_de_path = "$ScriptDir\Reporting\ServerUptime\DE_serverlists_reports"            #Server List path
+$latest_app_de_list = (Get-ChildItem -Path $latest_app_de_path -filter *clean*APP* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name # Select the latest APP/DC list
+$servers = $latest_app_de_list
 
 # Copy APP_DE_WSUS_Monthly_Update_xml
 Get-Content $servers| ForEach-Object {
