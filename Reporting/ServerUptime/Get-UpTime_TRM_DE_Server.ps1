@@ -22,15 +22,19 @@ exit
 #Determine running dir
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
  
-#Write-Host "Current script directory is $ScriptDir"
-$latest_trm_de_path = "$ScriptDir\DE_serverlists_reports"
-$latest_trm_de_list = (Get-ChildItem -Path $latest_trm_de_path -filter *clean*TRM* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name
-#$latest_trm_de_list_output = Get-Content $latest_trm_de_path\$latest_trm_de_list
+#Create Serverlist
+$de_trm = Get-ADComputer -Filter 'dnshostname -like "*.mmsrg.net"' -SearchBase "OU=TRM,OU=DE,OU=Server,DC=mmsrg,DC=net" -Properties IPv4Address | FT DNSHostName -A -HideTableHeaders | Out-File "$ScriptDir\TRM_DE_ServerList_temp_2.txt" -force ;
+$b = Get-Content -Path $ScriptDir\TRM_DE_ServerList_temp_2.txt ;
+@(ForEach ($a in $b) {$a.Replace(' ', '')}) > $ScriptDir\TRM_DE_ServerList_temp_1.txt ;
+Get-Content "$ScriptDir\TRM_DE_ServerList_temp_1.txt" | Select-Object -Skip 1 | Out-File "$ScriptDir\TRM_DE_ServerList_temp.txt" -force ;
+rm "$ScriptDir\TRM_DE_ServerList_temp_2.txt" -Force;
+rm "$ScriptDir\TRM_DE_ServerList_temp_1.txt" -Force;
 
 function Get-UpTimeAllServer {
 
 #$servers= Get-Content "$ScriptDir\FQDNList.txt"
-$servers= Get-Content $latest_trm_de_path\$latest_trm_de_list
+$servers= Get-Content "$ScriptDir\TRM_DE_ServerList_temp.txt" 
+#$servers= Get-Content $latest_trm_de_path\$latest_trm_de_list
 $result=@()
 
 Foreach ($s in $servers) {
@@ -95,9 +99,11 @@ Write-Output $result | Format-Table -AutoSize
 
 }
 
-Get-UpTimeAllServer | Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-TRM_DE_ServerInfo.log" -force
+Get-UpTimeAllServer #Debug Mode
+#Get-UpTimeAllServer | Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-TRM_DE_ServerInfo.log" -force
 #Get-UpTimeAllServer |  ConvertTo-Html | Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.html" -force
 #Get-UpTimeAllServer | Export-Csv -Path "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.csv" -Encoding ascii -NoTypeInformation
 
+#rm "$ScriptDir\TRM_DE_ServerList_temp.txt" -force
 Write-Host -NoNewLine 'Press any key to continue...';
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');

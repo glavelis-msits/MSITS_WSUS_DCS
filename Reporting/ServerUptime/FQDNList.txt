@@ -3,3 +3,10 @@ AMB04APPMM1-1.mmsrg.net
 ANS04APPSE1-1.mmsrg.net
 ASB04APPMM1-1.mmsrg.net
 ASB04APPMM2-1.mmsrg.net
+ERL04APPSE1-1.mmsrg.net 
+LIF04APPMM1-1.mmsrg.net 
+CLL04APPMM1-1.mmsrg.net 
+HAN04APPSE1-1.mmsrg.net 
+GOS04APPMM1-1.mmsrg.net 
+MAD04APPMM4-1.mmsrg.net 
+KIE04APPSE1-1.mmsrg.net

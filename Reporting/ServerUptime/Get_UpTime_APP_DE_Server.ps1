@@ -21,12 +21,20 @@ exit
 
 #Determine running dir
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
- 
+
+#Vars
+#$latest_app_de_path = "$ScriptDir\DE_serverlists_reports"            #Server List path
+#$latest_app_de_list = (Get-ChildItem -Path $latest_app_de_path -filter *clean*APP* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name # Select the latest APP/DC list
+#$de_app_dc_servers = Get-ADComputer -Filter 'dnshostname -like "*.mmsrg.net"' -SearchBase "OU=Domain Controllers,DC=mmsrg,DC=net" -Properties IPv4Address | FT DNSHostName -A  -HideTableHeaders | Out-String
+#$servers = Get-ADComputer -Filter 'dnshostname -like "*.mmsrg.net"' -SearchBase "OU=Domain Controllers,DC=mmsrg,DC=net" -Properties IPv4Address | Format-Table DNSHostName -A  -HideTableHeaders | Out-String
+#$servers = Get-Content $latest_app_de_path\$latest_app_de_list
+$servers= Get-Content "$ScriptDir\FQDNList.txt"
+
 #Write-Host "Current script directory is $ScriptDir"
 
 function Get-UpTimeAllServer {
 
-$servers= Get-Content "$ScriptDir\FQDNList.txt"
+
 $result=@()
 
 Foreach ($s in $servers) {
@@ -62,9 +70,9 @@ $psversioncheck = Invoke-Command -ComputerName $s {$PSVersionTable.PSVersion.Maj
 $result+=New-Object -TypeName PSObject -Property ([ordered]@{
 'Server'=$s
 'CheckMK ID'=$checkmkHost
-#'LastBootUpTime'=$up
+'LastBootUpTime'=$up
 'Days'=$uptime.Days
-'Hours'=$uptime.Hours
+#'Hours'=$uptime.Hours
 #'Minutes'=$uptime.Minutes
 #'Seconds'=$uptime.Seconds
 'Reboot scr' = $app_powercycle #Reboot Script presence
@@ -89,8 +97,8 @@ $result+=New-Object -TypeName PSObject -Property ([ordered]@{
 Write-Output $result | Format-Table -AutoSize
 
 }
-
-Get-UpTimeAllServer | Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-APP_DE_ServerInfo.log" -force
+Get-UpTimeAllServer
+#Get-UpTimeAllServer | Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-APP_DE_ServerInfo.log" -force
 #Get-UpTimeAllServer |  ConvertTo-Html | Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.html" -force
 #Get-UpTimeAllServer | Export-Csv -Path "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.csv" -Encoding ascii -NoTypeInformation
 
