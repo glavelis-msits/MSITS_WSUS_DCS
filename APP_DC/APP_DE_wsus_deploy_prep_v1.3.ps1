@@ -19,7 +19,9 @@ $servers = $latest_app_de_list                                                  
 #$wsuslogfolder = "C:\temp\wsus\wsus_logs"													#WSUS update logs folder
 $latest_app_de_path = "$ScriptDir\Reporting\ServerUptime\DE_serverlists_reports"            #Server List path
 $latest_app_de_list = (Get-ChildItem -Path $latest_app_de_path -filter *clean*APP* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name # Select the latest APP/DC list
-
+$pw = Get-Content "\\ing04wsus01p\wsus_crd\svc-tac.txt"                                     #
+$pws = ConvertTo-SecureString -String $pw -AsPlainText -Force                               #SVC-TaskAutomateCopy pass encryption
+$svctac = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pws)) #
 
 
 #Create Destination Folders
@@ -114,11 +116,11 @@ else
 #APP_DE_WSUS_Monthly_Update
 Get-Content $servers| ForEach-Object {
     #$Session = New-PSSession -ComputerName "$_" ;
-	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_DE_Test_Group_WSUS_Monthly_Update.xml' | Out-String) -TaskName "APP_DE_Test_Group_WSUS_Monthly_Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password isRIvx0Vbu5V61nEnq56 –Force}
+	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_DE_Test_Group_WSUS_Monthly_Update.xml' | Out-String) -TaskName "APP_DE_Test_Group_WSUS_Monthly_Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password $svctac –Force}
     }
 
 #Task APP_DE_reboot
 Get-Content $servers| ForEach-Object {
     #$Session = New-PSSession -ComputerName "$_" ;
-	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force ; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_DE_reboot.xml' | Out-String) -TaskName "APP_DE_reboot" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password isRIvx0Vbu5V61nEnq56 –Force}
+	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force ; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_DE_reboot.xml' | Out-String) -TaskName "APP_DE_reboot" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password $svctac –Force}
     } 

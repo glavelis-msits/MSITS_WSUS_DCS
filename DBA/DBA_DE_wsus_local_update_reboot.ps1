@@ -8,10 +8,6 @@ $pw = Get-Content "\\ing04wsus01p\wsus_crd\soldbdedba.txt"
 $pws = ConvertTo-SecureString -String $pw -AsPlainText -Force
 $soldbpass = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pws))
 
-$pwus = Get-Content "\\ing04wsus01p\wsus_crd\soldbdedba_us.txt" 
-$pwuss = ConvertTo-SecureString -String $pwus -AsPlainText -Force
-TA_MON_ITSMT = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pwuss))
-
 #Put the Host in Maintenance Mode in CheckMK for 45mins and message "WSUS-patching planned downtime"
 Clear-Host
 Write-Host "========== Entering CheckMK Maintenance Mode   ============="

@@ -20,6 +20,9 @@ $servers_w2 = "$ScriptDir\Waves\DBA_DE_W2.txt"												#Wave 2 list path
 $servers_w3 = "$ScriptDir\Waves\DBA_DE_W3.txt"												#Wave 3 list path
 $servers_w4 = "$ScriptDir\Waves\DBA_DE_W4.txt"												#Wave 4 list path
 
+$pw = Get-Content "\\ing04wsus01p\wsus_crd\svc-tac.txt"                                     #
+$pws = ConvertTo-SecureString -String $pw -AsPlainText -Force                               #SVC-TaskAutomateCopy pass encryption
+$svctac = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pws)) #
 
 
 
@@ -243,7 +246,7 @@ else
 ##### SCHEDULED TASK CREATION #####
 #DBA_DE_WSUS_Monthly_Update
 Get-Content $servers_w1| ForEach-Object {
-    Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy Unrestricted -Force ; Register-ScheduledTask -Xml (Get-Content "C:\temp\wsus\DBA_DE_W1_Test_WSUS_Monthly_Update.xml" | Out-String) -TaskName "DBA_DE_W1_Test_WSUS_Monthly_Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy -Password isRIvx0Vbu5V61nEnq56 -Force}
+    Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy Unrestricted -Force ; Register-ScheduledTask -Xml (Get-Content "C:\temp\wsus\DBA_DE_W1_Test_WSUS_Monthly_Update.xml" | Out-String) -TaskName "DBA_DE_W1_Test_WSUS_Monthly_Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy -Password $svctac -Force}
     }
 
 
@@ -314,7 +317,7 @@ else
 ##### SCHEDULED TASK CREATION #####
 #DBA_DE_WSUS_Monthly_Update
 Get-Content $servers_w2| ForEach-Object {
-    Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy Unrestricted -Force ; Register-ScheduledTask -Xml (Get-Content "C:\temp\wsus\DBA_DE_W2_Test_WSUS_Monthly_Update.xml" | Out-String) -TaskName "DBA_DE_W2_Test_WSUS_Monthly_Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy -Password isRIvx0Vbu5V61nEnq56 -Force}    
+    Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy Unrestricted -Force ; Register-ScheduledTask -Xml (Get-Content "C:\temp\wsus\DBA_DE_W2_Test_WSUS_Monthly_Update.xml" | Out-String) -TaskName "DBA_DE_W2_Test_WSUS_Monthly_Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy -Password $svctac -Force}    
 }
 
 
@@ -385,7 +388,7 @@ else
 ##### SCHEDULED TASK CREATION #####
 #DBA_DE_WSUS_Monthly_Update
 Get-Content $servers_w3| ForEach-Object {
-    Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy Unrestricted -Force ; Register-ScheduledTask -Xml (Get-Content "C:\temp\wsus\DBA_DE_W3_Test_WSUS_Monthly_Update.xml" | Out-String) -TaskName "DBA_DE_W3_Test_WSUS_Monthly_Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy -Password isRIvx0Vbu5V61nEnq56 -Force}
+    Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy Unrestricted -Force ; Register-ScheduledTask -Xml (Get-Content "C:\temp\wsus\DBA_DE_W3_Test_WSUS_Monthly_Update.xml" | Out-String) -TaskName "DBA_DE_W3_Test_WSUS_Monthly_Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy -Password $svctac -Force}
 }
 
 
@@ -447,7 +450,7 @@ else
 ##### SCHEDULED TASK CREATION #####
 #DBA_DE_WSUS_Monthly_Update
 Get-Content $servers_w4| ForEach-Object {
-    Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy Unrestricted -Force ; Register-ScheduledTask -Xml (Get-Content "C:\temp\wsus\DBA_DE_W4_Test_WSUS_Monthly_Update.xml" | Out-String) -TaskName "DBA_DE_W4_Test_WSUS_Monthly_Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy -Password isRIvx0Vbu5V61nEnq56 -Force}
+    Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy Unrestricted -Force ; Register-ScheduledTask -Xml (Get-Content "C:\temp\wsus\DBA_DE_W4_Test_WSUS_Monthly_Update.xml" | Out-String) -TaskName "DBA_DE_W4_Test_WSUS_Monthly_Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy -Password $svctac -Force}
 }
 
 } 

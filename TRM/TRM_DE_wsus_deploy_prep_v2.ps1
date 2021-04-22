@@ -12,10 +12,14 @@ $destPath_TRM_weekly_powercycle_xml = "C:\temp\wsus"
 $sourcePath_TRM_weekly_powercycle = "$ScriptDir\TRM_weekly_powercycle.ps1"
 $destPath_TRM_weekly_powercycle = "C:\tasks"
 #$servers = "$ScriptDir\FQDNList.txt"
-$latest_trm_de_path = "$ScriptDir\Reporting\ServerUptime\DE_serverlists_reports"            #Server List path
-$latest_trm_de_list = (Get-ChildItem -Path $latest_trm_de_path -filter *clean*TRM* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name # Select the latest TRM list
+#$latest_trm_de_path = "$ScriptDir\Reporting\ServerUptime\DE_serverlists_reports"            #Server List path
+#$latest_trm_de_list = (Get-ChildItem -Path $latest_trm_de_path -filter *clean*TRM* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name # Select the latest TRM list
 #$servers = "$latest_trm_de_path\$latest_trm_de_list"
 $servers = "$ScriptDir\TRM_DE_temp.txt"
+
+$pw = Get-Content "\\ing04wsus01p\wsus_crd\svc-tac.txt"                                     #
+$pws = ConvertTo-SecureString -String $pw -AsPlainText -Force                               #SVC-TaskAutomateCopy pass encryption
+$svctac = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pws)) #
 
 
 #Create Destination Folders
@@ -105,11 +109,11 @@ else
 #Create Scheduled Task TRM_WSUS_Weekly_Update
 Get-Content $servers| ForEach-Object {
     #$Session = New-PSSession -ComputerName "$_" ;
-	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\TRM_WSUS_Weekly_Update.xml' | Out-String) -TaskName "TRM WSUS Weekly Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password isRIvx0Vbu5V61nEnq56 –Force}
+	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\TRM_WSUS_Weekly_Update.xml' | Out-String) -TaskName "TRM WSUS Weekly Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password $svctac –Force}
     }
 
 #Create Scheduled Task TRM_weekly_powercycle
 Get-Content $servers| ForEach-Object {
     #$Session = New-PSSession -ComputerName "$_" ;
-	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force ; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\TRM_weekly_powercycle.xml' | Out-String) -TaskName "TRM_weekly_powercycle" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password isRIvx0Vbu5V61nEnq56 –Force}
+	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force ; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\TRM_weekly_powercycle.xml' | Out-String) -TaskName "TRM_weekly_powercycle" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password $svctac –Force}
     }
