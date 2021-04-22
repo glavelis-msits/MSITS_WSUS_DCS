@@ -1,6 +1,0 @@
-﻿Clear-Host
-$computer = Get-Content computers.txt
-$session = New-PSSession -ComputerName $computer
-#Invoke-Command -Session $session {[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; mkdir C:\temp\wsus_logs -Force -Confirm:$false; Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Confirm:$false; Install-Module -Name PSWindowsUpdate –Force -Confirm:$false | Out-File C:\temp\wsus_logs\PSWindowsUpdate_installation.log  -Confirm:$false}
-#Invoke-Command -Session $session {[System.Net.WebRequest]::DefaultWebProxy.Credentials = System.Net.CredentialCache]::DefaultCredentials; mkdir C:\temp\wsus_logs -Force -Confirm:$false; Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Confirm:$false; Install-Module -Name PSWindowsUpdate –Force -Confirm:$false | Out-File C:\temp\wsus_logs\PSWindowsUpdate_installation.log  -Confirm:$false  }
-Invoke-Command -Session $session {[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; mkdir C:\temp\wsus_logs -Force -Confirm:$false; Install-Module -Name PSWindowsUpdate –Force -Confirm:$false; Enable-WURemoting -Force -Confirm:$false | Out-File C:\temp\wsus_logs\PSWindowsUpdate_installation.log  -Confirm:$false}
