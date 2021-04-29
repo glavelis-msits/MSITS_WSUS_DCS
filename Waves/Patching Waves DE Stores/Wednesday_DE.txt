@@ -1,0 +1,452 @@
+ALA04TRMMM1-1.org.media-saturn.net
+ASB04TRM001 not found
+ATH04APPPRTG01.org.media-saturn.net
+ATH04EPODSHQ1 not found
+ATH04SCG01.org.media-saturn.net
+BCN04APPHQ1-1.org.media-saturn.net
+BCN04BIN002.org.media-saturn.net
+BCN04DOM002.media-saturn.net
+BCN04EPODSHQ1.org.media-saturn.net
+BCN04ETL001.org.media-saturn.net
+BCN04ETR004.media-saturn.com
+BCN04LTA001.org.media-saturn.net
+BCN04MCDPT1-1.org.media-saturn.net
+BCN04MIS001.org.media-saturn.net
+BCN04ONL002.org.media-saturn.net
+BCN04SII001.org.media-saturn.net
+BCN04SQLOLTP001 not found
+BCN04TMC003N not found
+BER04FSRMM15-1.org.media-saturn.net
+BER04TRMMM13-1.org.media-saturn.net
+BER04TRMMM4-1.org.media-saturn.net
+BER04TRMSE10-1.org.media-saturn.net
+BER04TRMSE7-1.org.media-saturn.net
+BEY04BPSDBA01.org.media-saturn.net
+BOA04TRMMM1-1.org.media-saturn.net
+BRB04TRMMM1-1.org.media-saturn.net
+BRM04TRMMM3-1.org.media-saturn.net
+BRUNNERTAN06 not found
+BUD04APPHQ1-4.org.media-saturn.net
+BUD04APPHQ1-5.org.media-saturn.net
+BUD04FILE001.org.media-saturn.net
+BUD04GRIDVIS001.org.media-saturn.net
+BUD04INTRA001 not found
+BUD04INTRA002.org.media-saturn.net
+BUD04MSEC1-1O.org.media-saturn.net
+BUD04MSEC1-2.org.media-saturn.net
+BUD04PRICEFX001.org.media-saturn.net
+BUD04SCG1N not found
+CHE04TRMSE1-1.org.media-saturn.net
+DHO04TRMMM1-1.org.media-saturn.net
+DUETSCHK01 not found
+ENDEP01 not found
+ERF04APPNOVA01.hq.media-saturn.net
+ERF04APPOUTLOOK.hq.media-saturn.net
+ERF04ARCHNOVA.hq.media-saturn.net
+ERF04NAS.hq.media-saturn.net
+ESL04TRMMM1-1.org.media-saturn.net
+FFM04APPABI01P.org.media-saturn.net
+FFM04APPMAFO04X not found
+FFM04DCI019.hq.media-saturn.net
+FFM04DCM063.rb.media-saturn.net
+FFM04DCS001.org.media-saturn.net
+FFM04DCS014.org.media-saturn.net
+FFM04DCS018.org.media-saturn.net
+FFM04DCS047.org.media-saturn.net
+FFM04DOM019.media-saturn.net
+FFM04TSESD01P.org.media-saturn.net
+FRIEDRICHMART05 not found
+GAISWINKLER01 not found
+GCP04DCI001.hq.media-saturn.net
+GOE04PRSZL1-2.org.media-saturn.net
+GRG004FISCAL1-N not found
+GRG010FISCAL1 not found
+GRG501FISCAL1 not found
+GRW04APPHQ01.org.media-saturn.net
+GRW04DCS004.org.media-saturn.net
+GRW04DCS005.org.media-saturn.net
+GRW04EPOVSHQ01 not found
+GRW04JETADM01.org.media-saturn.net
+GRW04QUASK001.org.media-saturn.net
+GRW04WSUSHQ01O not found
+HAM04APPDOK01.hq.media-saturn.net
+HAM04APPDOK02 not found
+HAM04APPNAV03.hq.media-saturn.net
+HAM04APPNAV06 not found
+HAM04APPNAV09.hq.media-saturn.net
+HAM04CCTEU1-1.org.media-saturn.net
+HAM04MCADE2-3.org.media-saturn.net
+HAM04MCDAT1-1.org.media-saturn.net
+HAM04MCDCH1-1.org.media-saturn.net
+HAM04MCDSE1-1.org.media-saturn.net
+HAM04MCDTR3-1.org.media-saturn.net
+HAM04MCTDE2-4.org.media-saturn.net
+HAM04MCTGR1-2.org.media-saturn.net
+HAM04MCTTR1-1.org.media-saturn.net
+HAM04SQLNAV01.hq.media-saturn.net
+HAM04SQLNAV01B not found
+HAM04TRMMM1-1.org.media-saturn.net
+HAM04TRMMM7-1.org.media-saturn.net
+HAM04TRMSE4-1.org.media-saturn.net
+HDB04TRMMM2-1.org.media-saturn.net
+HEINENJO01 not found
+HOCHH08 not found
+HOFREUTER01 not found
+ING04APPBMA01P.hq.media-saturn.net
+ING04APPCSM01T.hq.media-saturn.net
+ING04APPDAP01P.hq.media-saturn.net
+ING04APPDMC01M.hq.media-saturn.net
+ING04APPESH01T.hq.media-saturn.net
+ING04APPGLT03P.hq.media-saturn.net
+ING04APPGR002.org.media-saturn.net
+ING04APPGR008.org.media-saturn.net
+ING04APPGR013.media-saturn.com
+ING04APPMSD016.org.media-saturn.net
+ING04APPMSD021.org.media-saturn.net
+ING04APPMSD027.org.media-saturn.net
+ING04APPMSD041.org.media-saturn.net
+ING04APPMSD057.org.media-saturn.net
+ING04APPMSD600.org.media-saturn.net
+ING04APPMSD601.org.media-saturn.net
+ING04APPMSD603.org.media-saturn.net
+ING04APPMSD614.org.media-saturn.net
+ING04APPMSD616.org.media-saturn.net
+ING04APPMSD619.org.media-saturn.net
+ING04APPMSD620.org.media-saturn.net
+ING04APPMSD622.org.media-saturn.net
+ING04APPMSD624.org.media-saturn.net
+ING04APPPL005P.org.media-saturn.net
+ING04APPPL008P.org.media-saturn.net
+ING04APPREP01P.hq.media-saturn.net
+ING04APPSTRATOZ01.media-saturn.com
+ING04APPSTX01P.org.media-saturn.net
+ING04APPTEST3.hq.media-saturn.net
+ING04APPWJA01P.hq.media-saturn.net
+ING04CERCAN02.media-saturn.net
+ING04CERCES002.media-saturn.net
+ING04CERCRL002.media-saturn.net
+ING04CLUCAP001.media-saturn.net
+ING04CTXLIC01P.hq.media-saturn.net
+ING04DBAES006P.hq.media-saturn.net
+ING04DEPLOY001N.hq.media-saturn.net
+ING04DEVEL01.org.media-saturn.net
+ING04EPODSHQ01P.hq.media-saturn.net
+ING04EXCUMS2.hq.media-saturn.net
+ING04HYPCL02T.hq.media-saturn.net
+ING04KMSLIC01P.hq.media-saturn.net
+ING04MAN011.org.media-saturn.net
+ING04MDEES01P.hq.media-saturn.net
+ING04MNTADE1-2.org.media-saturn.net
+ING04MNTDAT1-2.org.media-saturn.net
+ING04MNTDDE1-2.org.media-saturn.net
+ING04PIMHOP01.hq.media-saturn.net
+ING04PRSNL001T.hq.media-saturn.net
+ING04PRTHQ03P.hq.media-saturn.net
+ING04RDPCER03T.hq.media-saturn.net
+ING04SAPUFT02P.hq.media-saturn.net
+ING04SCSAT1-1.org.media-saturn.net
+ING04SCSAT1-2.org.media-saturn.net
+ING04SCSAT2-1.org.media-saturn.net
+ING04SCSBE1-1.org.media-saturn.net
+ING04SCSBE2-1.org.media-saturn.net
+ING04SCSDES2-1.org.media-saturn.net
+ING04SCSHU2-1.org.media-saturn.net
+ING04SPSMSI04D.hq.media-saturn.net
+ING04SPSMSID01T.hq.media-saturn.net
+ING04TAUFOM01.hq.media-saturn.net
+ING04TRMMSD002.mmsrg.net
+ING04TSTDAM24.hq.media-saturn.net
+ING04TSTMD01T.hq.media-saturn.net
+ING04VCSRS002.hq.media-saturn.net
+ING04VSVVDI05.hq.media-saturn.net
+IST04APPHQ2-1.org.media-saturn.net
+IST04APPISTMM8.org.media-saturn.net
+IST04DCS001.org.media-saturn.net
+IST04EDEFTER01.org.media-saturn.net
+IST04IMPOSIAT01.org.media-saturn.net
+IST04INVODBT01 not found
+IST04LIDYAAPP01.org.media-saturn.net
+IST04PRTLAPP01 not found
+IST04PRTLDB03.org.media-saturn.net
+IST04PRTLFS01.org.media-saturn.net
+IST04RPACNTRM01.org.media-saturn.net
+IST04RPADEV03 not found
+IST04SRVCDSK01 not found
+IST04STORECAM01.org.media-saturn.net
+IST04TLCST01 not found
+IST04WKZ001.org.media-saturn.net
+JAKSCH01 not found
+KAD04APPMM1-1.mmsrg.net
+KAD04TRMMM1-1.mmsrg.net
+KAMPW02 not found
+KAR04APPSE1-1.org.media-saturn.net
+KAR04APPSE2-1.org.media-saturn.net
+KAR04TRMSE2-1.org.media-saturn.net
+KAT04APPMM1-1.org.media-saturn.net
+KAT04APPMM2-1.org.media-saturn.net
+KAT04APPMM3-1.org.media-saturn.net
+KAT04APPSE9-1 not found
+KAUZK01 not found
+KAY04APPMM1-1.org.media-saturn.net
+KCH04APPMM1-1.org.media-saturn.net
+KCH04TRMMM1-1.org.media-saturn.net
+KEIMELEDER01 not found
+KELLERMANNB01 not found
+KIL04APPMM1-1.org.media-saturn.net
+KIN04APPMM1-1.org.media-saturn.net
+KIP04APPMM1-1.org.media-saturn.net
+KLM04APPMM1-1.org.media-saturn.net
+KLR04APPMM1-1.org.media-saturn.net
+KLS04APPMM1-1.org.media-saturn.net
+KNO04APPMM1-1.org.media-saturn.net
+KNS04APPMM1-1.org.media-saturn.net
+KOB04APPSE1-1.org.media-saturn.net
+KOB04APPSE2-1.org.media-saturn.net
+KOB04TRMSE2-1.org.media-saturn.net
+KOC04APPMM1-1.org.media-saturn.net
+KOC04APPMM2-1.org.media-saturn.net
+KOL04APPSE5-1.org.media-saturn.net
+KOL04FSRSE5-1.org.media-saturn.net
+KOS04APPMM1-1.org.media-saturn.net
+KRA04APPMM1-1.org.media-saturn.net
+KRA04APPMM2-1.org.media-saturn.net
+KRA04APPMM3-1.org.media-saturn.net
+KRA04APPMM4-1.org.media-saturn.net
+KRA04APPMM9-1 not found
+KRE04APPMM1-1.mmsrg.net
+KRS04APPMM1-1.org.media-saturn.net
+KRS04TRMMM1-1.org.media-saturn.net
+KUHNAL02 not found
+KUT04APPMM1-1.org.media-saturn.net
+KYA04APPMM1-1.org.media-saturn.net
+KYA04APPMM2-1.org.media-saturn.net
+LBN04APPMM1-1.org.media-saturn.net
+LBU04APPMM1-1.mmsrg.net
+LDZ04APPMM1-1.org.media-saturn.net
+LDZ04APPMM2-1.org.media-saturn.net
+LDZ04APPMM3-1.org.media-saturn.net
+LDZ04APPMM4-1.org.media-saturn.net
+LDZ04APPMM5-1.org.media-saturn.net
+LEA04APPMM1-1.org.media-saturn.net
+LEG04APPMM1-1.org.media-saturn.net
+LEI04APPMM1-1.org.media-saturn.net
+LEI04APPMM2-1.org.media-saturn.net
+LEI04APPMM3-1.org.media-saturn.net
+LEI04APPSE1-1.org.media-saturn.net
+LEI04TRMMM2-1.org.media-saturn.net
+LEI04TRMMM3-1.org.media-saturn.net
+LEI04TRMSE1-1.org.media-saturn.net
+LEO04APPMM1-1.org.media-saturn.net
+LEVCHENKOO01 not found
+LFD04APPMM1-1.org.media-saturn.net
+LFD04TRMMM1-1.org.media-saturn.net
+LGS04APPMM1-1.mmsrg.net
+LIP04APPMM1-1.org.media-saturn.net
+LIS04FSR002.org.media-saturn.net
+LKP04APPMM1-1.org.media-saturn.net
+LLA04APPMM1-1.org.media-saturn.net
+LNB04APPMM1-1.org.media-saturn.net
+LPA04APPMM1-1.org.media-saturn.net
+LPA04APPMM2-1.org.media-saturn.net
+LRA04APPMM1-1.mmsrg.net
+LUB04APPMM1-1.org.media-saturn.net
+LUB04APPMM2-1.org.media-saturn.net
+LUKASM01 not found
+LUL04APPMM1-1.org.media-saturn.net
+LUL04TRMMM1-1.org.media-saturn.net
+LUX04APPSE1-1N.org.media-saturn.net
+LYS04APPMM1-1.org.media-saturn.net
+MAD04APPMM1-1.org.media-saturn.net
+MAD04APPMM6-1.org.media-saturn.net
+MAD04APPMM8-1.org.media-saturn.net
+MAD04BCKWH1-1.org.media-saturn.net
+MAG04APPMM1-1.org.media-saturn.net
+MAG04APPMM2-1.org.media-saturn.net
+MAG04TRMMM1-1.org.media-saturn.net
+MAH04APPMM2-1.org.media-saturn.net
+MAI04APPMM1-1.org.media-saturn.net
+MAP04APPMM1-1.org.media-saturn.net
+MAT04APPMM1-1.mmsrg.net
+MAT04RTL002 not found
+MBH04APPMM1-1.org.media-saturn.net
+MBH04TRMMM1-1.org.media-saturn.net
+MCAFEE-TEST2 not found
+MECHS01 not found
+MENNECKE01 not found
+MKM04APPMM1-1.org.media-saturn.net
+MLA04APPMM1-1.org.media-saturn.net
+MLM04APPMM2-1.mmsrg.net
+MLY04APPMM1-1.org.media-saturn.net
+MMSWVDFS01 not found
+MNE04APPMM1-1.org.media-saturn.net
+MOE04APPMM1-1.mmsrg.net
+MORARUC02 not found
+MORLOCKV20 not found
+MRB04APPMM1-1.org.media-saturn.net
+MRI04APPMM1-1.org.media-saturn.net
+MRI04APPMM2-1.org.media-saturn.net
+MRI04APPMM3-1.org.media-saturn.net
+MUC04APPDIV03P not found
+MUC04APPMM1-1.org.media-saturn.net
+MUC04APPMM2-1.org.media-saturn.net
+MUC04APPMM3-1.org.media-saturn.net
+MUC04APPMM4-1.org.media-saturn.net
+MUC04APPMM5-1.mmsrg.net
+MUC04APPSE2-1.org.media-saturn.net
+MUC04APPSE3-1.org.media-saturn.net
+MUC04APPSE3-3.org.media-saturn.net
+MUC04APPSE4-1.org.media-saturn.net
+MUC04APPSE5-1.org.media-saturn.net
+MUC04TRMMM4-1.org.media-saturn.net
+MUC04TRMSE4-1.org.media-saturn.net
+MUC04TRMSE5-1.org.media-saturn.net
+MUE04APPMM1-1.org.media-saturn.net
+MUE04TRMMM1-1.org.media-saturn.net
+MUI04APPMM1-1.org.media-saturn.net
+NAGELEISEN01 not found
+ORT04TRMMM1-1 not found
+PZN04ECO001.org.media-saturn.net
+PZN04INV001.org.media-saturn.net
+PZN04MXD002T.org.media-saturn.net
+PZN04MXD003.org.media-saturn.net
+PZN04MXDB01.org.media-saturn.net
+PZN04RDSH01.org.media-saturn.net
+PZN04RDSHGUS1.org.media-saturn.net
+PZN04SQLS012.org.media-saturn.net
+PZN04WEB002.org.media-saturn.net
+RADEMACHERW01 not found
+RAUSCHM01 not found
+RDA04APPRDASE1.org.media-saturn.net
+RDA04APPSPKSE1.org.media-saturn.net
+RDA04CLN013.org.media-saturn.net
+RDA04CRM001.org.media-saturn.net
+RDA04CRM001-S not found
+RDA04DBA001N.org.media-saturn.net
+RDA04EDH001.org.media-saturn.net
+RDA04JOB001-T.org.media-saturn.net
+RDA04JOB002.org.media-saturn.net
+RDA04SQL010.org.media-saturn.net
+RDA04SRM001-DR.org.media-saturn.net
+RDA04TPL001-C not found
+RDA04TRM001.org.media-saturn.net
+RDA04TRM001-T.org.media-saturn.net
+RDA04WDS002.org.media-saturn.net
+RDA04WEB003.org.media-saturn.net
+REC04TRMMM1-1.org.media-saturn.net
+RTL04TRMSE1-1.org.media-saturn.net
+SAA04TRMSE1-1.org.media-saturn.net
+SCHIEBERJ04 not found
+SCHUMACHERTO01 not found
+SFG04TRMMM1-1.org.media-saturn.net
+SKM04DCC001.media-saturn.com
+SKM04DCC001.media-saturn.com
+SKM04DCQMM6-1 not found
+SKM04DOM001.media-saturn.net
+SKM04SCG01.org.media-saturn.net
+SKM04SCSSE1-1.org.media-saturn.net
+SKM04SRVHQ18.org.media-saturn.net
+SKM04SRVHQ19.org.media-saturn.net
+SKM04TRMMM1-1.org.media-saturn.net
+STEINERDAV01 not found
+STERKF01 not found
+STH04TRMMM1-1.org.media-saturn.net
+SVR-AB.hq.media-saturn.net
+SVR-AB-BO4 not found
+SVR-TMS01.media-saturn.com
+SVR-VOIP-TRANSFER.hq.media-saturn.net
+SWT04TRMMM1-1.org.media-saturn.net
+TAB04DEPHQ12 not found
+TBN04DBAMM1-1.org.media-saturn.net
+TCI04DBAMM2-1.org.media-saturn.net
+TCW04DBAMM1-1.org.media-saturn.net
+TEK04DBAMM1-1.org.media-saturn.net
+TEK04DBAMM2-1.org.media-saturn.net
+TESTW2012R2.hq.media-saturn.net
+THE04DBASE2-1.org.media-saturn.net
+THU04DBAMM1-1.org.media-saturn.net
+TOD04DBAMM1-1.mmsrg.net
+TOD04DBAMM2-1.org.media-saturn.net
+TQA-WIN-SAX002N.org.media-saturn.net
+TRB04DBAMM1-1.org.media-saturn.net
+TRN04DBAMM1-1.org.media-saturn.net
+TRR04DBAMM1-1.mmsrg.net
+TRW04DBAMM1-1.org.media-saturn.net
+TYC04DBAMM1-1.org.media-saturn.net
+UME04DBAMM1-1.org.media-saturn.net
+UND04DBAMM1-1.org.media-saturn.net
+UPP04DBAMM1-1.org.media-saturn.net
+VAA04DBAMM1-1.org.media-saturn.net
+VAE04DBAMM1-1.org.media-saturn.net
+VAM04DBAMM1-1.org.media-saturn.net
+VBR04DBAMM1-1.org.media-saturn.net
+VBR04TRMMM1-1.org.media-saturn.net
+VIA04DBAMM1-1.org.media-saturn.net
+VIE04APPGPL01.org.media-saturn.net
+VIE04APPVMHQ1-2.org.media-saturn.net
+VIE04APPXXX01T not found
+VIE04DBAGPL01.org.media-saturn.net
+VIE04ESLR01P.org.media-saturn.net
+VIE04MAN001.org.media-saturn.net
+VIE04TRM001.org.media-saturn.net
+VIG04DBAMM1-1.org.media-saturn.net
+VIG04DBAMM2-1.org.media-saturn.net
+VIO04DBAMM1-1.org.media-saturn.net
+VLL04DBAMM1-1.org.media-saturn.net
+VNL04DBASE1-1.org.media-saturn.net
+VS-S4TNGARCHIVN.org.media-saturn.net
+VXJ04DBAMM1-1.org.media-saturn.net
+VXJ04TRMMM1-1.org.media-saturn.net
+WAL04DBAMM1-1.org.media-saturn.net
+WAR04ABS002.org.media-saturn.net
+WAR04APPMS2-1.org.media-saturn.net
+WAR04APPRC1-1.org.media-saturn.net
+WAR04DBA002.org.media-saturn.net
+WAR04DBAMM10-1.org.media-saturn.net
+WAR04DBAMM1-1.org.media-saturn.net
+WAR04DBAMM11-1.org.media-saturn.net
+WAR04DBAMM2-1.org.media-saturn.net
+WAR04DBAMM3-1.org.media-saturn.net
+WAR04DBAMM4-1.org.media-saturn.net
+WAR04DBAMM5-1.org.media-saturn.net
+WAR04DBAMM6-1.org.media-saturn.net
+WAR04DBAMM7-1.org.media-saturn.net
+WAR04DBAMM8-1.org.media-saturn.net
+WAR04DBAMM9-1.org.media-saturn.net
+WAR04DBAMS2-1.org.media-saturn.net
+WAR04PRS002N not found
+WAR04RUM001.org.media-saturn.net
+WEINMANNC03 not found
+WET04DBAMM1-1.org.media-saturn.net
+WHI04DBAMM1-1.org.media-saturn.net
+WHM04DBAMM1-1.mmsrg.net
+WIE04DBAMM1-1.org.media-saturn.net
+WIE04DBAMM2-1.org.media-saturn.net
+WIH04DBAMM1-1.org.media-saturn.net
+WILDSTEP01 not found
+WIN2008-02-TEST not found
+WLO04DBAMM1-1.org.media-saturn.net
+WNT04DBAMM1-1.org.media-saturn.net
+WNT04DBAMM2-1.org.media-saturn.net
+WRO04DBAMM1-1.org.media-saturn.net
+WRO04DBAMM2-1.org.media-saturn.net
+WRO04DBAMM3-1.org.media-saturn.net
+WRO04DBAMM4-1.org.media-saturn.net
+WRO04DBAMM5-1.org.media-saturn.net
+XER04DBAMM15-1.org.media-saturn.net
+XER04DBASE15-1.org.media-saturn.net
+ZAA04DBAMM1-1.org.media-saturn.net
+ZAB04DBAMM1-1.org.media-saturn.net
+ZAM04DBAMM1-1.org.media-saturn.net
+ZAZ04DBAMM1-1.org.media-saturn.net
+ZGA04DBAMM1-1.org.media-saturn.net
+ZLK04APPANTMM1.org.media-saturn.net
+ZLK04APPHASMM1.org.media-saturn.net
+ZLK04BRK001.org.media-saturn.net
+ZLK04DBA001.org.media-saturn.net
+ZLK04DCS007.org.media-saturn.net
+ZLK04DNA001 not found
+ZLK04PRS001.org.media-saturn.net
+ZND04DBASE1-1.org.media-saturn.net
+ZOY04DBAMM1-1.org.media-saturn.net
+ZRH04DBAMM1-1.org.media-saturn.net
+ZWC04DBAMM1-1.org.media-saturn.net
