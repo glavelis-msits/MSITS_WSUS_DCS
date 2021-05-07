@@ -25,7 +25,7 @@ $Title = 'MSITS APP-DC Store Server WSUS Report'
 
 # Create Serverlist
 function APPserverlist {
-Get-ADComputer -Filter 'dnshostname -like "*.mmsrg.net"' -SearchBase "OU=Domain Controllers,DC=mmsrg,DC=net" -Properties IPv4Address | FT DNSHostName -A -HideTableHeaders | Out-File "$ScriptDir\APP_DE_ServerList_temp_2.txt" -force ;
+Get-ADComputer -Filter 'dnshostname -like "*.mmsrg.net"' -SearchBase "OU=Domain Controllers,DC=mmsrg,DC=net" -Properties IPv4Address | Sort-Object DNSHostName -Descending | FT DNSHostName -A -HideTableHeaders | Out-File "$ScriptDir\APP_DE_ServerList_temp_2.txt" -force ;
 $b = Get-Content -Path $ScriptDir\APP_DE_ServerList_temp_2.txt ;
 @(ForEach ($a in $b) {$a.Replace(' ', '')}) > $ScriptDir\APP_DE_ServerList_temp_1.txt ;
 Get-Content "$ScriptDir\APP_DE_ServerList_temp_1.txt" | Select-Object -Skip 1 | Out-File "$ScriptDir\APP_DE_ServerList_temp.txt" -force ;
@@ -123,6 +123,7 @@ APPserverlist
 
 
 $smp= Get-Content "$ScriptDir\APP_DE_ServerList_temp.txt"  # Automatic list extraction 
+#$smp= Get-Content "$ScriptDir\APPlication_Deployment_serverlist.txt"
 
 $infoObject=@()
 $results=@()

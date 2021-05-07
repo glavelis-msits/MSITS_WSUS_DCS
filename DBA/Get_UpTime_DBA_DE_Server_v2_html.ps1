@@ -25,7 +25,7 @@ $Title = 'MSITS DBA Store Server WSUS Report'
 
 # Create Serverlist
 function DBAserverlist {
-Get-ADComputer -Filter 'dnshostname -like "*.mmsrg.net"' -SearchBase "OU=DBA,OU=DE,OU=Server,DC=mmsrg,DC=net" -Properties IPv4Address | FT DNSHostName -A -HideTableHeaders | Out-File "$ScriptDir\DBA_DE_ServerList_temp_2.txt" -force ;
+Get-ADComputer -Filter 'dnshostname -like "*.mmsrg.net"' -SearchBase "OU=DBA,OU=DE,OU=Server,DC=mmsrg,DC=net" -Properties IPv4Address | Sort-Object DNSHostName -Descending | FT DNSHostName -A -HideTableHeaders | Out-File "$ScriptDir\DBA_DE_ServerList_temp_2.txt" -force ;
 $b = Get-Content -Path $ScriptDir\DBA_DE_ServerList_temp_2.txt ;
 @(ForEach ($a in $b) {$a.Replace(' ', '')}) > $ScriptDir\DBA_DE_ServerList_temp_1.txt ;
 Get-Content "$ScriptDir\DBA_DE_ServerList_temp_1.txt" | Select-Object -Skip 1 | Out-File "$ScriptDir\DBA_DE_ServerList_temp.txt" -force ;

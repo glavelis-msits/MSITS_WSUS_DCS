@@ -7,61 +7,75 @@ $destPath_PSWU = "C:\Program Files\WindowsPowerShell\Modules"                   
 $sourcePath_wsus_local_update_noreboot = "$ScriptDir\APP_DE_wsus_local_update_reboot.ps1"  	#Local WSUS update script path
 $destPath_wsus_local_update_noreboot = "C:\tasks"                                          	#WSUS update path destination
 $sourcePath_WSUS_Update_check_xml = "$ScriptDir\APP_DE_Test_Group_WSUS_Monthly_Update.xml" 	#Scheduled Update Task local xml path
+$sourcePath_Runonce_xml = "$ScriptDir\APP_Run_Once.xml" 									#Runonce Task local xml path
 $destPath_WSUS_Update_check_xml = "C:\temp\wsus"                                           	#Scheduled Task Destination 
 $sourcePath_APP_DE_powercycle = "$ScriptDir\APP_DE_reboot.ps1"   							#Local Powercycle script path
 $destPath_APP_DE_powercycle = "C:\tasks" 													#Powercycle script destination	
 $sourcePath_APP_DE_reboot_xml = "$ScriptDir\APP_DE_reboot.xml" 								#Scheduled Reboot Task local xml path
 $destPath_APP_DE_reboot_xml = "C:\temp\wsus"     											#Reboot Task xml destination
-#$servers = "$ScriptDir\FQDNList.txt"														#Server List
-$servers = $latest_app_de_list                                                              #Server List (new)
+$servers = "E:\Scripts\MSITS_WSUS_DCS\APP_DC\APP_Runonce.txt"														#Server List
+#$servers = $latest_app_de_list                                                              #Server List (new)
 #$taskfolder = "C:\tasks"																	#Tasks folder path
 #$wsusfolder = "C:\temp\wsus"																#WSUS folder path
 #$wsuslogfolder = "C:\temp\wsus\wsus_logs"													#WSUS update logs folder
-$latest_app_de_path = "$ScriptDir\Reporting\ServerUptime\DE_serverlists_reports"            #Server List path
-$latest_app_de_list = (Get-ChildItem -Path $latest_app_de_path -filter *clean*APP* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name # Select the latest APP/DC list
+#$latest_app_de_path = "$ScriptDir\Reporting\ServerUptime\DE_serverlists_reports"            #Server List path
+#$latest_app_de_list = (Get-ChildItem -Path $latest_app_de_path -filter *clean*APP* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name # Select the latest APP/DC list
 $pw = Get-Content "\\ing04wsus01p\wsus_crd\svc-tac.txt"                                     #
 $pws = ConvertTo-SecureString -String $pw -AsPlainText -Force                               #SVC-TaskAutomateCopy pass encryption
 $svctac = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pws)) #
 
 
 #Create Destination Folders
-Get-Content $servers| ForEach-Object {
+<# Get-Content $servers| ForEach-Object {
 Invoke-Command -ComputerName "$_" -ScriptBlock {
     $Path="C:\tasks"
     if (!(Test-Path $Path))
     {
-    New-Item -ItemType Directory -Force -Path C:\tasks
+    write-host "Tasks folder already exists" -ForegroundColor Green 
     }
     else
     {
-    write-host "Tasks folder already exists" -ForegroundColor Green 
-    } ;
-
-    $Path="C:\temp\wsus"
-
+	New-Item -ItemType Directory -Force -Path C:\tasks
+    } ; #>
+Get-Content $servers| ForEach-Object {
+    Invoke-Command -ComputerName "$_" -ScriptBlock {
+    New-Item -ItemType Directory -Force -Path "C:\temp\wsus"
+    }};
+	
+Get-Content $servers| ForEach-Object {
+    Invoke-Command -ComputerName "$_" -ScriptBlock {
+    New-Item -ItemType Directory -Force -Path "C:\tasks"
+    }};
+	
+Get-Content $servers| ForEach-Object {
+    Invoke-Command -ComputerName "$_" -ScriptBlock {
+    New-Item -ItemType Directory -Force -Path "C:\temp\wsus\wsus_logs"
+    }};
+	
+<#     $Path="C:\temp\wsus"
 if (!(Test-Path $Path))
+{
+write-host "WSUS folder already exists" -ForegroundColor Green
+}
+else
 {
 New-Item -ItemType Directory -Force -Path C:\temp\wsus
-}
-else
-{
-write-host "WSUS folder already exists" -ForegroundColor Green 
-} ;
+} ; #>
 
-$Path="C:\temp\wsus\wsus_logs"
+<# $Path="C:\temp\wsus\wsus_logs"
 
 if (!(Test-Path $Path))
 {
-New-Item -ItemType Directory -Force -Path C:\temp\wsus\wsus_logs
+write-host "WSUS logs folder already exists" -ForegroundColor Green
 }
 else
 {
-write-host "WSUS logs folder already exists" -ForegroundColor Green 
-} ;
+ New-Item -ItemType Directory -Force -Path C:\temp\wsus\wsus_logs
+} ; #>
 
-
+<# 
 }
-    }
+    } #>
 
 
 Get-Content $servers | ForEach-Object {
@@ -71,11 +85,11 @@ $Path="C:\Program Files\WindowsPowerShell\Modules\PSWindowsUpdate"
 
 if (!(Test-Path $Path))
 {
-copy-item -Path $sourcePath_PSWU -Destination $destPath_PSWU -recurse -ToSession $Session -ErrorAction SilentlyContinue
+write-host "PSwindowsUpdate Module already exists" -ForegroundColor Green 
 }
 else
 {
-write-host "PSwindowsUpdate Module already exists" -ForegroundColor Green 
+copy-item -Path $sourcePath_PSWU -Destination $destPath_PSWU -recurse -ToSession $Session -ErrorAction SilentlyContinue
 } ;
 
    
@@ -87,13 +101,19 @@ else
 {copy-item -Path $sourcePath_wsus_local_update_noreboot -Destination $destPath_wsus_local_update_noreboot -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
 
 
-# Copy APP_DE Schedule Task xml
+<# # Copy APP_DE Schedule Task xml
 $app_de_wsus_task_xml = "C:\temp\wsus\APP_DE_Test_Group_WSUS_Monthly_Update.xml"
 if (Test-Path $app_de_wsus_task_xml -PathType leaf) 
 {"WSUS update Task schedule xml exists"  }
 else
-{copy-item -Path $sourcePath_WSUS_Update_check_xml -Destination $destPath_WSUS_Update_check_xml -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
+{copy-item -Path $sourcePath_WSUS_Update_check_xml -Destination $destPath_WSUS_Update_check_xml -recurse -ToSession $Session -ErrorAction SilentlyContinue} ; #>
 
+# Copy APP_DE Runonce xml
+$app_de_wsus_task_xml = "C:\temp\wsus\APP_Run_Once.xml"
+if (Test-Path $app_de_wsus_task_xml -PathType leaf) 
+{"WSUS update Task schedule xml exists"  }
+else
+{copy-item -Path $sourcePath_Runonce_xml -Destination $destPath_WSUS_Update_check_xml -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
 
 # Copy APP_DE_reboot script	
 $app_de_reboot_path = "C:\tasks\APP_DE_reboot.ps1"
@@ -114,13 +134,19 @@ else
 
 ##### SCHEDULED TASK CREATION #####
 #APP_DE_WSUS_Monthly_Update
-Get-Content $servers| ForEach-Object {
+<# Get-Content $servers| ForEach-Object {
     #$Session = New-PSSession -ComputerName "$_" ;
 	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_DE_Test_Group_WSUS_Monthly_Update.xml' | Out-String) -TaskName "APP_DE_Test_Group_WSUS_Monthly_Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password $svctac –Force}
-    }
+    } #>
 
 #Task APP_DE_reboot
-Get-Content $servers| ForEach-Object {
+<# Get-Content $servers| ForEach-Object {
     #$Session = New-PSSession -ComputerName "$_" ;
 	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force ; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_DE_reboot.xml' | Out-String) -TaskName "APP_DE_reboot" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password $svctac –Force}
+    }  #>
+	
+#Task APP_DE_runonce
+Get-Content $servers| ForEach-Object {
+    #$Session = New-PSSession -ComputerName "$_" ;
+	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force ; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_Run_Once.xml' | Out-String) -TaskName "APP_Runonce" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password "isRIvx0Vbu5V61nEnq56" –Force}
     } 

@@ -3,7 +3,7 @@ $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 
 # Create Serverlist
 function TRMserverlist {
-Get-ADComputer -Filter 'dnshostname -like "*.mmsrg.net"' -SearchBase "OU=TRM,OU=DE,OU=Server,DC=mmsrg,DC=net" -Properties IPv4Address | FT DNSHostName -A -HideTableHeaders | Out-File "$ScriptDir\TRM_DE_ServerList_temp_2.txt" -force ;
+Get-ADComputer -Filter 'dnshostname -like "*.mmsrg.net"' -SearchBase "OU=TRM,OU=DE,OU=Server,DC=mmsrg,DC=net" -Properties IPv4Address | Sort-Object DNSHostName -Descending | FT DNSHostName -A -HideTableHeaders | Out-File "$ScriptDir\TRM_DE_ServerList_temp_2.txt" -force ;
 $b = Get-Content -Path $ScriptDir\TRM_DE_ServerList_temp_2.txt ;
 @(ForEach ($a in $b) {$a.Replace(' ', '')}) > $ScriptDir\TRM_DE_ServerList_temp_1.txt ;
 Get-Content "$ScriptDir\TRM_DE_ServerList_temp_1.txt" | Select-Object -Skip 1 | Out-File "$ScriptDir\TRM_DE_ServerList_temp.txt" -force ;
@@ -12,11 +12,11 @@ rm "$ScriptDir\TRM_DE_ServerList_temp_1.txt" -Force;
 }
 
 
-TRMserverlist
+#TRMserverlist
 
 # Server List selection
-#$smp= Get-Content "$ScriptDir\FQDNList.txt" # Premade list
-$smp= Get-Content "$ScriptDir\TRM_DE_ServerList_temp.txt"  # Automatic list extraction 
+$smp= Get-Content "$ScriptDir\TRM_DE_trigger.txt" # Premade list
+#$smp= Get-Content "$ScriptDir\TRM_DE_ServerList_temp.txt"  # Automatic list extraction 
 
 $infoObject=@()
 $results=@()
@@ -75,10 +75,10 @@ $results+=$infoObject
 
 
 
-$results|Export-csv "E:\Scripts\MSITS_WSUS_DCS\Reporting\temp_TRM.csv" -NoTypeInformation 
-Import-CSV "E:\Scripts\MSITS_WSUS_DCS\Reporting\temp_TRM.csv" | ConvertTo-Html -Head $css  | Out-File "E:\Scripts\MSITS_WSUS_DCS\Reporting\TRM_DE_Report-$(get-date -f dd-MM-yyyy).html" 
-rm "$ScriptDir\temp_TRM.csv"
-rm "$ScriptDir\TRM_DE_ServerList_temp.txt"
+$results|Export-csv "$ScriptDir\reporting\temp_TRM.csv" -NoTypeInformation 
+Import-CSV "$ScriptDir\reporting\temp_TRM.csv" | ConvertTo-Html -Head $css  | Out-File "$ScriptDir\reporting\TRM_DE_Report-$(get-date -f dd-MM-yyyy).html" 
+#rm "$ScriptDir\temp_TRM.csv"
+#rm "$ScriptDir\TRM_DE_ServerList_temp.txt"
 ##################### Sending Mail ############################
 
 <# $smtpServer = "Provide SMTP server" 
