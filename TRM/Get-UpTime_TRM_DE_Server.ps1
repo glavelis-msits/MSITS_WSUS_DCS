@@ -99,9 +99,9 @@ Write-Output $result | Format-Table -AutoSize
 
 }
 
-Get-UpTimeAllServer #Debug Mode
+#Get-UpTimeAllServer #Debug Mode
 #Get-UpTimeAllServer | Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-TRM_DE_ServerInfo.log" -force
-#Get-UpTimeAllServer |  ConvertTo-Html | Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.html" -force
+Get-UpTimeAllServer |  ConvertTo-Html | Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.html" -force
 #Get-UpTimeAllServer | Export-Csv -Path "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-ServerUptime.csv" -Encoding ascii -NoTypeInformation
 
 #rm "$ScriptDir\TRM_DE_ServerList_temp.txt" -force

@@ -1,8 +1,44 @@
-#Retrieve CheckMK Host ID
+$myWindowsID=[System.Security.Principal.WindowsIdentity]::GetCurrent()
+$myWindowsPrincipal=new-object System.Security.Principal.WindowsPrincipal($myWindowsID)
+$adminRole=[System.Security.Principal.WindowsBuiltInRole]::Administrator
+if ($myWindowsPrincipal.IsInRole($adminRole))
+   {
+   
+   $Host.UI.RawUI.WindowTitle = $myInvocation.MyCommand.Definition + "(Elevated)"
+   $Host.UI.RawUI.BackgroundColor = "DarkBlue"
+   clear-host
+   }
+else
+   {
+   $newProcess = new-object System.Diagnostics.ProcessStartInfo "PowerShell";
+   
+
+   $newProcess.Arguments = $myInvocation.MyCommand.Definition;
+   
+
+   $newProcess.Verb = "runas";
+   
+
+   [System.Diagnostics.Process]::Start($newProcess);
+   
+   exit
+   }
+
+Clear-Host
+
+Write-Verbose "MSITS Decentral APP-DC Powershell 5.1 deployment"
+Function DeployPowershell51 {
 $checkmkHost = (Get-ItemProperty -path 'HKLM:\SOFTWARE\WoW6432Node\Microsoft\RebootByMGS').CheckMKObject
 
-#Hostname
-$FQDN = ([System.Net.Dns]::GetHostByName($ComputerName)).HostName
+Invoke-WebRequest -Uri "https://ffm04mannws13p/INFMON01/check_mk/view.py?_do_confirm=Yes&_do_actions=yes&_transid=-1&view_name=hoststatus&site=&_ack_sticky=on&_ack_otify=off&output_format=JSON&_username=automation&_secret=504804f8-7ef3-47bc-90dc-553bee370d86&_down_comment=WSUS-patching%planned%downtime&_down_from_now=From+now+for&_down_minutes=120&host=$checkmkHost"
+
+Start-Sleep -Seconds 30
+
+wusa.exe 'C:\tasks\Win8.1AndW2K12R2-KB3191564-x64.msu' /quiet
+
+Shutdown -r -t 180 /c "Powershell 5.1 Upgrade reconfiguration."
+
+}
 
 function appde-start-services {
 $services = 'bwengine', 'tibemsd', 'TIBHawkAgentESB-PRD-D01', 'Solid2'
@@ -80,28 +116,10 @@ $services = 'PPX_Controller', 'StoreAgent', 'wildfly'
 }
 
 
-#Put the Host in Maintenance Mode in CheckMK for 45mins and message "WSUS-patching planned downtime"
-#Invoke-WebRequest -Uri "https://ffm04mannws13p/INFMON01/check_mk/view.py?_do_confirm=Yes&_do_actions=yes&_transid=-1&view_name=hoststatus&site=&_ack_sticky=on&_ack_otify=off&output_format=JSON&_username=automation&_secret=504804f8-7ef3-47bc-90dc-553bee370d86&_down_comment=WSUS-patching%planned%downtime&_down_from_now=From+now+for&_down_minutes=45&host=$checkmkHost"
-#Put the Host in Maintenance Mode in CheckMK for 120mins and message "WSUS-patching planned downtime"
-Invoke-WebRequest -Uri "https://ffm04mannws13p/INFMON01/check_mk/view.py?_do_confirm=Yes&_do_actions=yes&_transid=-1&view_name=hoststatus&site=&_ack_sticky=on&_ack_otify=off&output_format=JSON&_username=automation&_secret=504804f8-7ef3-47bc-90dc-553bee370d86&_down_comment=WSUS-patching%planned%downtime&_down_from_now=From+now+for&_down_minutes=120&host=$checkmkHost"
 
-#Wait for the Webrequest to take effect
-Start-Sleep -Seconds 60
 
-#Start services shutdown
-appde-stop-services 
+appde-stop-services
 Start-Sleep -Seconds 120
-
-appde-stop-nssm-services 
+appde-stop-nssm-services
 Start-Sleep -Seconds 120
-
-
-#Run Patch install
-Install-WindowsUpdate -AcceptAll -Install -AutoReboot  | Out-File "C:\temp\wsus\wsus_logs\$FQDN-$(get-date -f dd-MM-yyyy)-WindowsUpdate.log" -force
-
-#Purge logs older than 180 day(s)
-$Pathlog = "C:\temp\wsus\wsus_logs"
-$Daysback = "-180"
-$CurrentDate = Get-Date
-$DatetoDelete = $CurrentDate.AddDays($Daysback)
-Get-ChildItem $Pathlog | Where-Object { $_.LastWriteTime -lt $DatetoDelete } | Remove-Item
+DeployPowershell51

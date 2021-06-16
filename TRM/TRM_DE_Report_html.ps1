@@ -15,8 +15,8 @@ rm "$ScriptDir\TRM_DE_ServerList_temp_1.txt" -Force;
 #TRMserverlist
 
 # Server List selection
-$smp= Get-Content "$ScriptDir\TRM_DE_trigger.txt" # Premade list
-#$smp= Get-Content "$ScriptDir\TRM_DE_ServerList_temp.txt"  # Automatic list extraction 
+#$smp= Get-Content "$ScriptDir\TRM_DE_trigger.txt" # Premade list
+$smp= Get-Content "$ScriptDir\TRM_DE_ServerList_temp.txt"  # Automatic list extraction 
 
 $infoObject=@()
 $results=@()
@@ -53,7 +53,7 @@ $wsustask = Invoke-Command -ComputerName $s {(Get-ScheduledTask | Where-Object {
 $wsustaskrb = Invoke-Command -ComputerName $s {(Get-ScheduledTask | Where-Object {$_.TaskName -eq "TRM_weekly_powercycle"}).State}
 $Boottime= Get-WmiObject win32_operatingsystem 
 $b=($boottime| select @{LABEL= "LastBootUpTime";EXPRESSION={$_.ConverttoDateTime($_.lastbootuptime)}}).Lastbootuptime
-$service=Get-WmiObject -ClassName Win32_Service -Filter "StartMode='Auto' AND State<>'Running'"
+#$service = Get-WmiObject -ClassName Win32_Service -Filter "StartMode='Auto' AND State<>'Running'"
 $psversioncheck = Invoke-Command -ComputerName $s {$PSVersionTable.PSVersion.Major}
 $up=(Get-CimInstance -ClassName win32_operatingsystem -ComputerName $s -ErrorAction Stop).LastBootUpTime 
 $uptime=((Get-Date) - $up)
@@ -77,8 +77,8 @@ $results+=$infoObject
 
 $results|Export-csv "$ScriptDir\reporting\temp_TRM.csv" -NoTypeInformation 
 Import-CSV "$ScriptDir\reporting\temp_TRM.csv" | ConvertTo-Html -Head $css  | Out-File "$ScriptDir\reporting\TRM_DE_Report-$(get-date -f dd-MM-yyyy).html" 
-#rm "$ScriptDir\temp_TRM.csv"
-#rm "$ScriptDir\TRM_DE_ServerList_temp.txt"
+rm "$ScriptDir\temp_TRM.csv"
+rm "$ScriptDir\TRM_DE_ServerList_temp.txt"
 ##################### Sending Mail ############################
 
 <# $smtpServer = "Provide SMTP server" 

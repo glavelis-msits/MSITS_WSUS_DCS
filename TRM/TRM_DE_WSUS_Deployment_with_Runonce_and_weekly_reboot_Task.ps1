@@ -24,17 +24,17 @@ Clear-Host
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 $local_PSWU_path = "$ScriptDir\PSWindowsUpdate"
 $remote_PSWU_path = "C:\Program Files\WindowsPowerShell\Modules"
-$sourcePath_wsus_local_update_noreboot = "$ScriptDir\TRM_wsus_local_update_reboot.ps1"
+$sourcePath_wsus_local_update_noreboot = "$ScriptDir\Assets\TRM_wsus_local_update_reboot.ps1"
 $remote_taskspath = "C:\tasks"
-#$sourcePath_WSUS_Update_check_xml = "$ScriptDir\TRM_WSUS_Weekly_Update.xml"
+#$sourcePath_WSUS_Update_check_xml = "$ScriptDir\Assets\TRM_WSUS_Weekly_Update.xml"
 $remote_wsuspath = "C:\temp\wsus"
-$local_TRM_weekly_powercycle_xml = "$ScriptDir\TRM_weekly_powercycle.xml"
-$local_TRM_weekly_powercycle = "$ScriptDir\TRM_weekly_powercycle.ps1"
-$local_TRM_runonce_powercycle_xml = "$ScriptDir\TRM_Run_Once_TRM_DE_Triggered_Deploy_No_Task.xml"
-$servers = "$ScriptDir\TRM_DE_trigger.txt"
-$pw = Get-Content "\\ing04wsus01p\wsus_crd\svc-tac.txt"                                     #
-$pws = ConvertTo-SecureString -String $pw -AsPlainText -Force                               #SVC-TaskAutomateCopy pass encryption
-$svctac = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pws)) #
+$local_TRM_weekly_powercycle_xml = "$ScriptDir\Assets\TRM_weekly_powercycle.xml"
+$local_TRM_weekly_powercycle = "$ScriptDir\Assets\TRM_weekly_powercycle.ps1"
+$local_TRM_runonce_powercycle_xml = "$ScriptDir\Assets\TRM_Run_Once_TRM_DE_Triggered_Deploy_No_Task.xml"
+$servers = "$ScriptDir\TRM_DE_ServerList_temp.txt"
+#$pw = Get-Content "\\ing04wsus01p\wsus_crd\svc-tac.txt"                                     #
+#$pws = ConvertTo-SecureString -String $pw -AsPlainText -Force                               #SVC-TaskAutomateCopy pass encryption
+#$svctac = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pws)) #
 
 function TRMDeploy {
 

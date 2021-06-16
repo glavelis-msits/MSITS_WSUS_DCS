@@ -1,4 +1,4 @@
-param([switch]$Elevated)
+<# param([switch]$Elevated)
 
 function Test-Admin {
   $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
@@ -17,10 +17,10 @@ if ((Test-Admin) -eq $false)  {
 exit
 }
 
-'Running with Elevated Admin privileges'
+'Running with Elevated Admin privileges' #>
 
 # Determine running dir
-$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path 
 
 # Create Serverlist
 function TRMserverlist {
@@ -106,10 +106,10 @@ Write-Output $result | Format-Table -AutoSize
 
 }
 #$reportstart = (Get-Date)
-TRMserverlist                                                                                              #Create Servelist
+#TRMserverlist                                                                                              #Create Servelist
 #Get-UpTimeAllServer                                                                                       #Debug Mode
-Get-UpTimeAllServer | Out-File "$ScriptDir\logs\$(get-date -f dd-MM-yyyy)-TRM_DE_ServerReport.log" -force  #Output Report
-rm "$ScriptDir\TRM_DE_ServerList_temp.txt" -force                                                          #Remove list (upkeep)
+Get-UpTimeAllServer | Out-File "$ScriptDir\reporting\$(get-date -f dd-MM-yyyy)-TRM_DE_ServerReport.log" -force  #Output Report
+#rm "$ScriptDir\TRM_DE_ServerList_temp.txt" -force                                                          #Remove list (upkeep)
 # Get End Time
 #$reportend = (Get-Date)
 # Echo Time elapsed

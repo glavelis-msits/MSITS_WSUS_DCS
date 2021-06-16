@@ -1,3 +1,4 @@
+
 #Retrieve CheckMK Host ID
 $checkmkHost = (Get-ItemProperty -path 'HKLM:\SOFTWARE\WoW6432Node\Microsoft\RebootByMGS').CheckMKObject
 
@@ -95,13 +96,6 @@ Start-Sleep -Seconds 120
 appde-stop-nssm-services 
 Start-Sleep -Seconds 120
 
-
 #Run Patch install
-Install-WindowsUpdate -AcceptAll -Install -AutoReboot  | Out-File "C:\temp\wsus\wsus_logs\$FQDN-$(get-date -f dd-MM-yyyy)-WindowsUpdate.log" -force
+shutdown.exe /r /t 30 /c "Scheduled reboot"
 
-#Purge logs older than 180 day(s)
-$Pathlog = "C:\temp\wsus\wsus_logs"
-$Daysback = "-180"
-$CurrentDate = Get-Date
-$DatetoDelete = $CurrentDate.AddDays($Daysback)
-Get-ChildItem $Pathlog | Where-Object { $_.LastWriteTime -lt $DatetoDelete } | Remove-Item
