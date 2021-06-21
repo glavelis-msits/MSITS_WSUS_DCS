@@ -19,7 +19,7 @@ Get-Content $servers| ForEach-Object {
 $Session = New-PSSession -ComputerName "$_" ;
 
 #Create C:\tasks folder
-    <# Invoke-Command -ComputerName "$_" -ScriptBlock {
+  <#   Invoke-Command -ComputerName "$_" -ScriptBlock {
     New-Item -ItemType Directory -Force -Path "C:\tasks";} #>
 	
 	

@@ -1,17 +1,17 @@
 ﻿Clear-Host
 Write-Verbose "MSITS Decentral APP-DC WSUS Prerequisites deployment"
 ### Vars ###
-$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path                                	#Execution directory discovery
-$sourcePath_PSWU = "$ScriptDir\PSWindowsUpdate"                                            	#Local PSWU Module path
-$destPath_PSWU = "C:\Program Files\WindowsPowerShell\Modules"                              	#PSWU Module destination
-$sourcePath_wsus_local_update_noreboot = "$ScriptDir\APP_DE_wsus_local_update_reboot.ps1"  	#Local WSUS update script path
-$taskfolder = "C:\tasks"                                          							#WSUS update path destination
-$sourcepath_wsus_patch_update_runonce_xml = "$ScriptDir\APP_Run_Once_Patch_Update.xml" 		#Scheduled Update Task local xml path
-$sourcePath_Runonce_xml = "$ScriptDir\APP_Run_Once.xml" 									#Runonce Task local xml path
-$sourcePath_APP_DE_powercycle = "$ScriptDir\APP_DE_reboot.ps1"   							#Local Powercycle script path
-$sourcePath_APP_DE_reboot_xml = "$ScriptDir\APP_DE_reboot.xml" 								#Scheduled Reboot Task local xml path
-$wsusfolder = "C:\temp\wsus"																#WSUS folder path
-$wsuslogfolder = "C:\temp\wsus\wsus_logs"													#WSUS update logs folder
+$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path                                			#Execution directory discovery
+$sourcePath_PSWU = "$ScriptDir\PSWindowsUpdate"                                            			#Local PSWU Module path
+$destPath_PSWU = "C:\Program Files\WindowsPowerShell\Modules"                              			#PSWU Module destination
+$sourcePath_wsus_local_update_noreboot = "$ScriptDir\Assets\APP_DE_wsus_local_update_reboot.ps1"  	#Local WSUS update script path
+$taskfolder = "C:\tasks"                                          									#WSUS update path destination
+$sourcepath_wsus_patch_update_runonce_xml = "$ScriptDir\Assets\APP_Run_Once_Patch_Update.xml" 		#Scheduled Update Task local xml path
+$sourcePath_Runonce_xml = "$ScriptDir\Assets\APP_Run_Once.xml" 										#Runonce Task local xml path
+$sourcePath_APP_DE_powercycle = "$ScriptDir\Assets\APP_DE_reboot.ps1"   							#Local Powercycle script path
+$sourcePath_APP_DE_reboot_xml = "$ScriptDir\Assets\APP_DE_reboot.xml" 								#Scheduled Reboot Task local xml path
+$wsusfolder = "C:\temp\wsus"																		#WSUS folder path
+$wsuslogfolder = "C:\temp\wsus\wsus_logs"															#WSUS update logs folder
 
 ###########################################################################################################################################
 <#     Server list creation 
@@ -20,10 +20,19 @@ For an automatic AD server list extraction , uncheck the second servers var
 and all subsequent vars (don't forget to comment out the first server var) #>
 
 
-$servers = "$ScriptDir\APP_Runonce_copy_settings_wo_task_creation.txt"								#Server List
-#$servers = $latest_app_de_list                                                             #Server List (new)
-#$latest_app_de_path = "$ScriptDir\Reporting\ServerUptime\DE_serverlists_reports"           #Server List path
-#$latest_app_de_list = (Get-ChildItem -Path $latest_app_de_path -filter *clean*APP* | Sort-Object LastAccessTime -Descending | Select-Object -First 1).Name # Select the latest APP/DC list
+$servers = "$ScriptDir\APPlication_Deployment_serverlist.txt"										#Server List
+
+<# function APPserverlist {
+Get-ADComputer -Filter 'dnshostname -like "*.mmsrg.net"' -SearchBase "OU=Domain Controllers,DC=mmsrg,DC=net" -Properties IPv4Address | Sort-Object DNSHostName -Descending | FT DNSHostName -A -HideTableHeaders | Out-File "$ScriptDir\APP_DE_ServerList_temp_2.txt" -force ;
+$b = Get-Content -Path $ScriptDir\APP_DE_ServerList_temp_2.txt ;
+@(ForEach ($a in $b) {$a.Replace(' ', '')}) > $ScriptDir\APP_DE_ServerList_temp_1.txt ;
+Get-Content "$ScriptDir\APP_DE_ServerList_temp_1.txt" | Select-Object -Skip 1 | Out-File "$ScriptDir\APP_DE_ServerList_temp.txt" -force ;
+rm "$ScriptDir\APP_DE_ServerList_temp_2.txt" -Force;
+rm "$ScriptDir\APP_DE_ServerList_temp_1.txt" -Force;
+}
+APPserverlist #>
+#$servers = "$ScriptDir\APP_DE_ServerList_temp.txt"                                                 #Server List (new)
+
 
 ###########################################################################################################################################
 
@@ -98,13 +107,13 @@ else
 
 ##### SCHEDULED TASK CREATION #####
 #APP_DE_WSUS_Monthly_Update
-<# Get-Content $servers| ForEach-Object {
+Get-Content $servers| ForEach-Object {
     #$Session = New-PSSession -ComputerName "$_" ;
 	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_DE_Test_Group_WSUS_Monthly_Update.xml' | Out-String) -TaskName "APP_DE_Test_Group_WSUS_Monthly_Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password $svctac –Force}
-    } #>
+    }
 
 #Task APP_DE_reboot
-<# Get-Content $servers| ForEach-Object {
+Get-Content $servers| ForEach-Object {
     #$Session = New-PSSession -ComputerName "$_" ;
 	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force ; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_DE_reboot.xml' | Out-String) -TaskName "APP_DE_reboot" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password "isRIvx0Vbu5V61nEnq56" –Force}
     } 
@@ -113,4 +122,4 @@ else
 Get-Content $servers| ForEach-Object {
     #$Session = New-PSSession -ComputerName "$_" ;
 	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force ; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_Run_Once_Patch_Update.xml' | Out-String) -TaskName "APP_Runonce" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password "isRIvx0Vbu5V61nEnq56" –Force}
-    }  #>
+    } 

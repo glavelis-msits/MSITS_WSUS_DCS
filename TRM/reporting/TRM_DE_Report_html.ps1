@@ -12,7 +12,7 @@ rm "$ScriptDir\TRM_DE_ServerList_temp_1.txt" -Force;
 }
 
 
-#TRMserverlist
+TRMserverlist
 
 # Server List selection
 #$smp= Get-Content "$ScriptDir\TRM_DE_trigger.txt" # Premade list
