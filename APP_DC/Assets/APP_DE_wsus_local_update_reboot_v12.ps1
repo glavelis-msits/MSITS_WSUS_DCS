@@ -47,7 +47,7 @@ Foreach($computer in $ComputerName)
 
 Test-Partner-Connectivity
 
-#Partner Check
+<# #Partner Check
 $computercriptBlock = {
 
     $VerbosePreference = $using:VerbosePreference
@@ -184,7 +184,7 @@ foreach ($computer in $ComputerName) {
 if(!$output.IsPendingReboot) 
 { Write-Host "Reboot is not pending for $computer" }
 
-else { Write-Host "Reboot is pending for $computer" Exit }
+else { Write-Host "Reboot is pending for $computer" Exit } #>
 
 
 
@@ -271,8 +271,8 @@ $computerervices = 'PPX_Controller', 'StoreAgent', 'wildfly'
 
 #Put the Host in Maintenance Mode in CheckMK for 45mins and message "WSUS-patching planned downtime"
 #Invoke-WebRequest -Uri "https://ffm04mannws13p/INFMON01/check_mk/view.py?_do_confirm=Yes&_do_actions=yes&_transid=-1&view_name=hoststatus&site=&_ack_sticky=on&_ack_otify=off&output_format=JSON&_username=automation&_secret=504804f8-7ef3-47bc-90dc-553bee370d86&_down_comment=WSUS-patching%planned%downtime&_down_from_now=From+now+for&_down_minutes=45&host=$checkmkHost"
-#Put the Host in Maintenance Mode in CheckMK for 120mins and message "WSUS-patching planned downtime"
-Invoke-WebRequest -Uri "https://ffm04mannws13p/INFMON01/check_mk/view.py?_do_confirm=Yes&_do_actions=yes&_transid=-1&view_name=hoststatus&site=&_ack_sticky=on&_ack_otify=off&output_format=JSON&_username=automation&_secret=504804f8-7ef3-47bc-90dc-553bee370d86&_down_comment=WSUS-patching%planned%downtime&_down_from_now=From+now+for&_down_minutes=120&host=$checkmkHost"
+#Put the Host in Maintenance Mode in CheckMK for 90mins and message "WSUS-patching planned downtime"
+Invoke-WebRequest -Uri "https://ffm04mannws13p/INFMON01/check_mk/view.py?_do_confirm=Yes&_do_actions=yes&_transid=-1&view_name=hoststatus&site=&_ack_sticky=on&_ack_otify=off&output_format=JSON&_username=automation&_secret=504804f8-7ef3-47bc-90dc-553bee370d86&_down_comment=WSUS-patching%planned%downtime&_down_from_now=From+now+for&_down_minutes=90&host=$checkmkHost"
 
 #Wait for the Webrequest to take effect
 Start-Sleep -Seconds 60

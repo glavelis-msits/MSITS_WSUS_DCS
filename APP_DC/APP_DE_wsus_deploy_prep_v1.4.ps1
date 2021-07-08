@@ -7,7 +7,7 @@ $destPath_PSWU = "C:\Program Files\WindowsPowerShell\Modules"                   
 $sourcePath_wsus_local_update_noreboot = "$ScriptDir\Assets\APP_DE_wsus_local_update_reboot.ps1"  	#Local WSUS update script path
 $taskfolder = "C:\tasks"                                          									#WSUS update path destination
 $sourcepath_wsus_patch_update_runonce_xml = "$ScriptDir\Assets\APP_Run_Once_Patch_Update.xml" 		#Scheduled Update Task local xml path
-$sourcePath_Runonce_xml = "$ScriptDir\Assets\APP_Run_Once.xml" 										#Runonce Task local xml path
+$sourcePath_Runonce_xml = "$ScriptDir\Assets\APP_Run_Once.xml" 										#RunOnce Task local xml path
 $sourcePath_APP_DE_powercycle = "$ScriptDir\Assets\APP_DE_reboot.ps1"   							#Local Powercycle script path
 $sourcePath_APP_DE_reboot_xml = "$ScriptDir\Assets\APP_DE_reboot.xml" 								#Scheduled Reboot Task local xml path
 $wsusfolder = "C:\temp\wsus"																		#WSUS folder path
@@ -109,17 +109,17 @@ else
 #APP_DE_WSUS_Monthly_Update
 Get-Content $servers| ForEach-Object {
     #$Session = New-PSSession -ComputerName "$_" ;
-	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_DE_Test_Group_WSUS_Monthly_Update.xml' | Out-String) -TaskName "APP_DE_Test_Group_WSUS_Monthly_Update" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password $svctac –Force}
+	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_Run_Once.xml' | Out-String) -TaskName "APP_DE_Run Once Update script" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password $svctac –Force}
     }
 
-#Task APP_DE_reboot
+<# #Task APP_DE_reboot
 Get-Content $servers| ForEach-Object {
     #$Session = New-PSSession -ComputerName "$_" ;
 	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force ; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_DE_reboot.xml' | Out-String) -TaskName "APP_DE_reboot" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password "isRIvx0Vbu5V61nEnq56" –Force}
-    } 
+    }  #>
 	
-#Task APP_DE_runonce
+<# #Task APP_DE_runonce
 Get-Content $servers| ForEach-Object {
     #$Session = New-PSSession -ComputerName "$_" ;
 	Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy unrestricted -force ; Register-ScheduledTask -xml (Get-Content 'C:\temp\wsus\APP_Run_Once_Patch_Update.xml' | Out-String) -TaskName "APP_Runonce" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy  -Password "isRIvx0Vbu5V61nEnq56" –Force}
-    } 
+    }  #>

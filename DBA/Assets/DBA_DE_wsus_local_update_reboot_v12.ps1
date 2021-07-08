@@ -1,15 +1,11 @@
 #Retrieve CheckMK Host ID
 $checkmkHost = (Get-ItemProperty -path 'HKLM:\SOFTWARE\WoW6432Node\Microsoft\RebootByMGS').CheckMKObject
-
 #Hostname
 $FQDN = ([System.Net.Dns]::GetHostByName($ComputerName)).HostName
-
 #Retrieve CheckMK Host ID
 $checkmkHost = (Get-ItemProperty -path 'HKLM:\SOFTWARE\WoW6432Node\Microsoft\RebootByMGS').CheckMKObject
 #Error action
 $ErrorActionPreference = 'Stop'
-#Hostname
-$FQDN = ([System.Net.Dns]::GetHostByName($ComputerName)).HostName
 # Determine Partner Server
 $ComputerName = $FQDN -replace  'DBAMM', 'APPMM'
 
@@ -53,7 +49,7 @@ Foreach($computer in $ComputerName)
 
 Test-Partner-Connectivity
 
-#Partner Check
+<# #Partner Check
 $computercriptBlock = {
 
     $VerbosePreference = $using:VerbosePreference
@@ -190,7 +186,7 @@ foreach ($computer in $ComputerName) {
 if(!$output.IsPendingReboot) 
 { Write-Host "Reboot is not pending for $computer" }
 
-else { Write-Host "Reboot is pending for $computer" Exit }
+else { Write-Host "Reboot is pending for $computer" Exit } #>
 
 $pw = Get-Content "\\ing04wsus01p\wsus_crd\soldbdedba.txt" 
 $pws = ConvertTo-SecureString -String $pw -AsPlainText -Force
