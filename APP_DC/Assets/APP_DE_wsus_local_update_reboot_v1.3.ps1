@@ -1,18 +1,11 @@
 #Retrieve CheckMK Host ID
 $checkmkHost = (Get-ItemProperty -path 'HKLM:\SOFTWARE\WoW6432Node\Microsoft\RebootByMGS').CheckMKObject
-#Hostname
-$FQDN = ([System.Net.Dns]::GetHostByName($ComputerName)).HostName
 #Error action
 $ErrorActionPreference = 'Continue'
+#Hostname
+$FQDN = ([System.Net.Dns]::GetHostByName($ComputerName)).HostName
 # Determine Partner Server
-$ComputerName = $FQDN -replace  'DBAMM', 'APPMM'
-
-#Purge logs older than 180 day(s)
-$Path = "C:\temp\wsus"
-$Daysback = "-180"
-$CurrentDate = Get-Date
-$DatetoDelete = $CurrentDate.AddDays($Daysback)
-Get-ChildItem $Path | Where-Object { $_.LastWriteTime -lt $DatetoDelete } | Remove-Item
+$ComputerName = $FQDN -replace  'APPMM', 'DBAMM'
 
 <# function Test-Partner-Connectivity {
 
@@ -50,9 +43,9 @@ Foreach($computer in $ComputerName)
 
 } # end foreach
 
-} #>
+}
 
-#Test-Partner-Connectivity
+Test-Partner-Connectivity #>
 
 <# #Partner Check
 $computercriptBlock = {
@@ -193,47 +186,93 @@ if(!$output.IsPendingReboot)
 
 else { Write-Host "Reboot is pending for $computer" Exit } #>
 
-$pw = Get-Content "\\ing04wsus01p\wsus_crd\soldbdedba.txt" 
-$pws = ConvertTo-SecureString -String $pw -AsPlainText -Force
-$soldbpass = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pws))
 
+function Write-Log {
+    param (
+        $message,
+        [ValidateSet('INFO','WARNING','ERROR')]
+        $level = 'INFO'
+    )
+    $MsgColors = @{'INFO' = 'Gray';'WARNING' = 'Yellow';'ERROR' = 'Red'}
+ 
+    Write-Output "$(get-date -UFormat '%Y/%m/%d-%H:%M:%S')#$($level)# $message" | Out-File -FilePath "C:\temp\wsus\$($env:COMPUTERNAME)_$(get-date -format "dd-MMM-yyyy HH-mm")_WSUS_errors.log" -Append
+    Write-Host "$(get-date -UFormat '%Y/%m/%d-%H:%M:%S')#$($level)# $message" -ForegroundColor $MsgColors[$level]
+}
+
+
+#### GMS/WWS Service management #####
+
+
+function appde-stop-services {
+$computerervices = 'bwengine', 'tibemsd', 'TIBHawkAgentESB-PRD-D01', 'Solid2'
+
+    foreach ($computerervice in $computerervices)
+    {
+        if ((Get-Service $computerervice).Status -eq "Running")
+        {
+		try {
+			Stop-Service -Name $computerervice -erroraction Stop -Force
+        } catch {
+			Write-Log "Failed to stop $computerservice" -Level Error
+		}
+        }
+		else
+		{
+		Write-Log "Service $computerervice is still running" -Level Error
+		#if (get-process "OutletServices_PP-OutletServices_PP.exe" -ErrorAction SilentlyContinue) {Stop-Process OutletServices_PP-OutletServices_PP.exe}
+    }
+
+}
+}
+
+
+function appde-stop-nssm-services {
+$computerervices = 'PPX_Controller', 'StoreAgent', 'wildfly'
+
+    foreach ($computerervice in $computerervices)
+    {
+        if ((Get-Service $computerervice).Status -eq "Running")
+        {
+		nssm stop $computerervice
+		Write-Log "Service $computerervice is stopped" -level Info
+        
+        }
+		else
+		{ Write-Log "Service $computerervice is still running" -level Info
+    }
+
+}
+}
+
+
+
+#Put the Host in Maintenance Mode in CheckMK for 45mins and message "WSUS-patching planned downtime"
+#Invoke-WebRequest -Uri "https://ffm04mannws13p/INFMON01/check_mk/view.py?_do_confirm=Yes&_do_actions=yes&_transid=-1&view_name=hoststatus&site=&_ack_sticky=on&_ack_otify=off&output_format=JSON&_username=automation&_secret=504804f8-7ef3-47bc-90dc-553bee370d86&_down_comment=WSUS-patching%planned%downtime&_down_from_now=From+now+for&_down_minutes=45&host=$checkmkHost"
 #Put the Host in Maintenance Mode in CheckMK for 90mins and message "WSUS-patching planned downtime"
-Clear-Host
-Write-Host "========== Entering CheckMK Maintenance Mode   ============="
+Write-Log "Setting maintenance mode for server" -LEvel Info
 Invoke-WebRequest -Uri "https://ffm04mannws13p/INFMON01/check_mk/view.py?_do_confirm=Yes&_do_actions=yes&_transid=-1&view_name=hoststatus&site=&_ack_sticky=on&_ack_otify=off&output_format=JSON&_username=automation&_secret=504804f8-7ef3-47bc-90dc-553bee370d86&_down_comment=WSUS-patching%planned%downtime&_down_from_now=From+now+for&_down_minutes=90&host=$checkmkHost"
 
 #Wait for the Webrequest to take effect
 Start-Sleep -Seconds 60
 
 #Start services shutdown
-#Tibco Hawk Agent
- Write-Host "================ Shutting down Hawk Agent  ================"
-Get-Process | Where-Object { $_.Name -eq "hawkagent_ESB-PRD-D01" } | Stop-Process -force
-#Tibco BW-Engine
- Write-Host "================ Shutting down BW Engine   ================"
-Get-Process | Where-Object { $_.ProcessName -eq "tibemsd" } | Stop-Process -force
-#Wildfly
- Write-Host "================ Shutting down Wildfly     ================"
-Get-Process | Where-Object { $_.Name -eq "nssm" } | Stop-Process -force
+appde-stop-services 
+Start-Sleep -Seconds 120
 
- Write-Host "================ Shutting down Solid 1313  ================"
-solsql "tcp 1313" TA_MON_ITSMT $soldbpass C:\tasks\1313.sql | Out-File C:\temp\wsus\$FQDN-$(get-date -f dd-MM-yyyy)-SolDB_1313_log.txt
-
-#Wait for SolidDB 1313 to shutdown
-Start-Sleep -Seconds 30
-
- Write-Host "================ Shutting down Solid 1414 ================"
-solsql "tcp 1414" TA_MON_ITSMT $soldbpass C:\tasks\1414.sql | Out-File C:\temp\wsus\$FQDN-$(get-date -f dd-MM-yyyy)-SolDB_1414_log.txt
-
-#Wait for SolidDB 1414 to shutdown
-Start-Sleep -Seconds 30
+appde-stop-nssm-services 
+Start-Sleep -Seconds 120
 
 
 #Run Patch install
-Write-Host "================    WSUS update begin      ================"
-
+Write-Log "Starting Patches install"
 Install-WindowsUpdate -AcceptAll -Install -AutoReboot  | Out-File "C:\temp\wsus\$FQDN-$(get-date -f dd-MM-yyyy)-WindowsUpdate.log" -force
 
+#Purge logs older than 180 day(s)
+$Pathlog = "C:\temp\wsus\"
+$Daysback = "-180"
+$CurrentDate = Get-Date
+$DatetoDelete = $CurrentDate.AddDays($Daysback)
+Get-ChildItem $Pathlog | Where-Object { $_.LastWriteTime -lt $DatetoDelete } | Remove-Item
 
 #Reboot the Server if not rebooted by update module after 45 mins.
 Start-Sleep -Seconds 2700

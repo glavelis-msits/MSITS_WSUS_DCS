@@ -21,39 +21,19 @@ exit
 
 # Determine running dir
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
-$Title = 'MSITS APP-DC Store Server WSUS Report'
+$Title = 'MSITS TRM Store Server WSUS Report'
 
 # Create Serverlist
-function APPserverlist {
-
-Get-ADComputer -Filter * -SearchBase "OU=Domain Controllers,DC=mmsrg,DC=net" -Properties dnshostname | Where-Object { $_.DNSHostName -like "*04APPMM*.mmsrg.net"} | Sort-Object DNSHostName -Descending |ft DNSHostName -A -HideTableHeaders| Out-File "$ScriptDir\APPMM_DE_ServerList_temp.txt" -force ;
-$content_mm = Get-Content "$ScriptDir\APPMM_DE_ServerList_temp.txt" ;
-$content_mm | Foreach {$_.TrimEnd()} |  Set-Content "$ScriptDir\APPMM_DE_ServerList.txt" ;
-Get-ADComputer -Filter * -SearchBase "OU=Domain Controllers,DC=mmsrg,DC=net" -Properties dnshostname | Where-Object { $_.DNSHostName -like "*04APPSE*.mmsrg.net"} | Sort-Object DNSHostName -Descending |ft DNSHostName -A -HideTableHeaders| Out-File "$ScriptDir\APPSE_DE_ServerList_temp.txt" -force ;
-$content_se = Get-Content "$ScriptDir\APPSE_DE_ServerList_temp.txt" ;
-$content_se | Foreach {$_.TrimEnd()} |  Set-Content "$ScriptDir\APPSE_DE_ServerList.txt" ;
-rm "$ScriptDir\APPMM_DE_ServerList_temp.txt"
-rm "$ScriptDir\APPSE_DE_ServerList_temp.txt"
-
-# Build the file list
-$outfile = "$ScriptDir\temp\merged.txt"
-foreach ($file in $ScriptDir)
-{
-
-Get-ChildItem -Path $ScriptDir -Filter "*.txt" | Get-Content | select -Skip 1 | Out-File -FilePath $outfile -Encoding ascii -Append;
-   
+function TRMserverlist {
+    $de_trm = Get-ADComputer -Filter 'dnshostname -like "*.mmsrg.net"' -SearchBase "OU=TRM,OU=DE,OU=Server,DC=mmsrg,DC=net" -Properties IPv4Address | FT DNSHostName -A -HideTableHeaders | Out-File "$ScriptDir\TRM_DE_ServerList_temp_2.txt" -force ;
+    $b = Get-Content -Path $ScriptDir\TRM_DE_ServerList_temp_2.txt ;
+    @(ForEach ($a in $b) {$a.Replace(' ', '')}) > $ScriptDir\TRM_DE_ServerList_temp_1.txt ;
+    Get-Content "$ScriptDir\TRM_DE_ServerList_temp_1.txt" | Select-Object -Skip 1 | Out-File "$ScriptDir\TRM_DE_ServerList_final.txt" -force ;
+    rm "$ScriptDir\TRM_DE_ServerList_temp_2.txt" -Force;
+    rm "$ScriptDir\TRM_DE_ServerList_temp_1.txt" -Force;
 }
 
-Get-Content $outfile | ? {$_.trim() -ne "" } | set-content "$ScriptDir\merged_final.txt"
-$stream = [IO.File]::OpenWrite('$ScriptDir\merged_final.txt')
-$stream.SetLength($stream.Length - 1)
-$stream.Close()
-$stream.Dispose()
-rm $outfile
-rm "$ScriptDir\APPMM_DE_ServerList.txt"
-rm "$ScriptDir\APPSE_DE_ServerList.txt"
-}
-
+#
 
 
 ####################################################################################################################################################################
@@ -65,12 +45,12 @@ Write-Host "================ $Title ================"
 $PrevErrorActionPreference = $ErrorActionPreference
 $ErrorActionPreference = 'silentlycontinue'
 
-#### Automatic List generation #####
-<# APPserverlist
-$smp= Get-Content "$ScriptDir\merged_final.txt"  # Automatic list extraction  #>
+############ Automatic list extraction #############################
+#TRMserverlist
+#$smp= Get-Content "$ScriptDir\TRM_DE_ServerList_final.txt"  
 
-#### Manual List setting ####
-$smp= Get-Content "E:\Scripts\MSITS_WSUS_DCS\APP_DC\APPlication_Deployment_serverlist.txt"
+############ Manual list  #############################
+$smp= Get-Content "$ScriptDir\TRM_DE_ServerList_temp.txt"
 
 $infoObject=@()
 $results=@()
@@ -93,21 +73,21 @@ $p=Test-Connection -ComputerName $s -BufferSize 16  -Count 1 -Quiet
 $checkmkHost = Invoke-Command -ComputerName $s {(Get-ItemProperty -path 'HKLM:\SOFTWARE\WoW6432Node\Microsoft\RebootByMGS').CheckMKObject}
 $rebootpending = ((Get-WURebootStatus -ComputerName $s -Confirm:$false).RebootRequired)
 
-$APP_powercycle_path = "\\$s\c$\tasks\APP_DE_reboot.ps1"								# Reboot Script verification
-$APP_powercycle = if (Test-Path $APP_powercycle_path -PathType leaf) 
+$powercycle_path = "\\$s\c$\tasks\TRM_weekly_powercycle.ps1"								# Reboot Script verification
+$powercycle = if (Test-Path $powercycle_path -PathType leaf) 
 {"Exists"}
 else
 {"Missing"}
 
-$APP_wsupdrb_path = "\\$s\c$\tasks\APP_DE_wsus_local_update_reboot_v12.ps1"    				# WSUS Update Script verification
-$app_wsupdrb = if (Test-Path $APP_wsupdrb_path -PathType leaf) 
+$wsupdrb_path = "\\$s\c$\tasks\TRM_wsus_local_update_reboot.ps1"    				# WSUS Update Script verification
+$wsupdrb = if (Test-Path $wsupdrb_path -PathType leaf) 
 {"Exists"}
 else
 {"Missing"}
 
-$wsustask = Invoke-Command -ComputerName $s {(Get-ScheduledTask | Where-Object {$_.TaskName -eq "APP_DE_Test_Group_WSUS_Monthly_Update"}).State}
+$wsustask = Invoke-Command -ComputerName $s {(Get-ScheduledTask | Where-Object {$_.TaskName -eq "TRM WSUS Weekly Update"}).State}
 
-$wsustaskrb = Invoke-Command -ComputerName $s {(Get-ScheduledTask | Where-Object {$_.TaskName -eq "APP_DE_Run Once Update script"}).State}
+$wsustaskrb = Invoke-Command -ComputerName $s {(Get-ScheduledTask | Where-Object {$_.TaskName -eq "TRM_weekly_powercycle"}).State}
 
 $psversioncheck = Invoke-Command -ComputerName $s {$PSVersionTable.PSVersion.Major}
 
@@ -121,8 +101,8 @@ $infoObject|Add-Member -MemberType NoteProperty -Name "Reachable"  -value $p
 $infoObject|Add-Member -MemberType NoteProperty -Name "Uptime Days"  -value $uptime.Days
 $infoObject|Add-Member -MemberType NoteProperty -Name "Uptime Hours"  -value $uptime.Hours
 $infoObject|Add-Member -MemberType NoteProperty -Name "Reboot Pending" -Value $rebootpending
-$infoObject|Add-Member -MemberType NoteProperty -Name "WSUS Update script" -Value $app_wsupdrb
-#$infoObject|Add-Member -MemberType NoteProperty -Name "Reboot Script" -Value $app_powercycle
+$infoObject|Add-Member -MemberType NoteProperty -Name "WSUS Update script" -Value $wsupdrb
+$infoObject|Add-Member -MemberType NoteProperty -Name "Reboot Script" -Value $powercycle
 $infoObject|Add-Member -MemberType NoteProperty -Name "WSUS Update Task" -Value $wsustask
 $infoObject|Add-Member -MemberType NoteProperty -Name "WSUS Reboot Task" -Value $wsustaskrb
 $infoObject|Add-Member -MemberType NoteProperty -Name "Powershell version" -Value $psversioncheck
@@ -131,7 +111,7 @@ $results+=$infoObject
 }
 
 
-$results|Export-csv "$ScriptDir\temp_APP.csv" -NoTypeInformation 
-Import-CSV "$ScriptDir\temp_APP.csv" | ConvertTo-Html -Head $css  | Out-File "$ScriptDir\APPDC_DE_Report-$(get-date -f dd-MM-yyyy).html" 
-rm "$ScriptDir\temp_APP.csv"
-rm "$ScriptDir\merged_final.txt"
+$results|Export-csv "$ScriptDir\temp_TRM.csv" -NoTypeInformation 
+Import-CSV "$ScriptDir\temp_TRM.csv" | ConvertTo-Html -Head $css  | Out-File "$ScriptDir\TRM_Report-$(get-date -f dd-MM-yyyy).html" 
+rm "$ScriptDir\temp_TRM.csv"
+rm "$ScriptDir\TRM_DE_ServerList_final.txt"

@@ -1,13 +1,20 @@
 #Retrieve CheckMK Host ID
 $checkmkHost = (Get-ItemProperty -path 'HKLM:\SOFTWARE\WoW6432Node\Microsoft\RebootByMGS').CheckMKObject
 #Error action
-$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Continue'
 #Hostname
 $FQDN = ([System.Net.Dns]::GetHostByName($ComputerName)).HostName
 # Determine Partner Server
 $ComputerName = $FQDN -replace  'APPMM', 'DBAMM'
 
-function Test-Partner-Connectivity {
+#Purge logs older than 180 day(s)
+$Pathlog = "C:\temp\wsus\"
+$Daysback = "-180"
+$CurrentDate = Get-Date
+$DatetoDelete = $CurrentDate.AddDays($Daysback)
+Get-ChildItem $Pathlog | Where-Object { $_.LastWriteTime -lt $DatetoDelete } | Remove-Item
+
+<# function Test-Partner-Connectivity {
 
 Foreach($computer in $ComputerName)
 
@@ -45,7 +52,7 @@ Foreach($computer in $ComputerName)
 
 }
 
-Test-Partner-Connectivity
+Test-Partner-Connectivity #>
 
 <# #Partner Check
 $computercriptBlock = {
@@ -192,18 +199,18 @@ else { Write-Host "Reboot is pending for $computer" Exit } #>
 #### GMS/WWS Service management #####
 
 function appde-start-services {
-$computerervices = 'bwengine', 'tibemsd', 'TIBHawkAgentESB-PRD-D01', 'Solid2'
+$computerservices = 'bwengine', 'tibemsd', 'TIBHawkAgentESB-PRD-D01', 'Solid2'
 
-    foreach ($computerervice in $computerervices)
+    foreach ($computerservice in $computerservices)
     {
-        if ((Get-Service $computerervice).Status -eq "Stopped")
+        if ((Get-Service $computerservice).Status -eq "Stopped")
         {
-		Start-Service -Name $computerervice
-		Write-Host "Service $computerervice is starting" -ForegroundColor Red
+		Start-Service -Name $computerservice
+		Write-Host "Service $computerservice is starting" -ForegroundColor Red
         
         }
 		else
-		{ Write-Host "Service $computerervice is running" -ForegroundColor Green 
+		{ Write-Host "Service $computerservice is running" -ForegroundColor Green 
     }
 
 }
@@ -211,18 +218,18 @@ $computerervices = 'bwengine', 'tibemsd', 'TIBHawkAgentESB-PRD-D01', 'Solid2'
 
 
 function appde-stop-services {
-$computerervices = 'bwengine', 'tibemsd', 'TIBHawkAgentESB-PRD-D01', 'Solid2'
+$computerservices = 'bwengine', 'tibemsd', 'TIBHawkAgentESB-PRD-D01', 'Solid2'
 
-    foreach ($computerervice in $computerervices)
+    foreach ($computerservice in $computerservices)
     {
-        if ((Get-Service $computerervice).Status -eq "Running")
+        if ((Get-Service $computerservice).Status -eq "Running")
         {
-		Stop-Service -Name $computerervice
-		Write-Host "Service $computerervice is stopped" -ForegroundColor Green
+		Stop-Service -Name $computerservice
+		Write-Host "Service $computerservice is stopped" -ForegroundColor Green
         
         }
 		else
-		{ Write-Host "Service $computerervice is still running" -ForegroundColor Red
+		{ Write-Host "Service $computerservice is still running" -ForegroundColor Red
     }
 
 }
@@ -230,18 +237,18 @@ $computerervices = 'bwengine', 'tibemsd', 'TIBHawkAgentESB-PRD-D01', 'Solid2'
 
 
 function appde-start-nssm-services {
-$computerervices = 'PPX_Controller', 'StoreAgent', 'wildfly'
+$computerservices = 'PPX_Controller', 'StoreAgent', 'wildfly'
 
-    foreach ($computerervice in $computerervices)
+    foreach ($computerservice in $computerservices)
     {
-        if ((Get-Service $computerervice).Status -eq "Stopped")
+        if ((Get-Service $computerservice).Status -eq "Stopped")
         {
-		nssm start $computerervice
-		Write-Host "Service $computerervice is starting" -ForegroundColor Red
+		nssm start $computerservice
+		Write-Host "Service $computerservice is starting" -ForegroundColor Red
         
         }
 		else
-		{ Write-Host "Service $computerervice is running" -ForegroundColor Green 
+		{ Write-Host "Service $computerservice is running" -ForegroundColor Green 
     }
 
 }
@@ -249,28 +256,23 @@ $computerervices = 'PPX_Controller', 'StoreAgent', 'wildfly'
 
 
 function appde-stop-nssm-services {
-$computerervices = 'PPX_Controller', 'StoreAgent', 'wildfly'
+$computerservices = 'PPX_Controller', 'StoreAgent', 'wildfly'
 
-    foreach ($computerervice in $computerervices)
+    foreach ($computerservice in $computerservices)
     {
-        if ((Get-Service $computerervice).Status -eq "Running")
+        if ((Get-Service $computerservice).Status -eq "Running")
         {
-		nssm stop $computerervice
-		Write-Host "Service $computerervice is stopped" -ForegroundColor Green
+		nssm stop $computerservice
+		Write-Host "Service $computerservice is stopped" -ForegroundColor Green
         
         }
 		else
-		{ Write-Host "Service $computerervice is still running" -ForegroundColor Red
+		{ Write-Host "Service $computerservice is still running" -ForegroundColor Red
     }
 
 }
 }
 
-
-
-
-#Put the Host in Maintenance Mode in CheckMK for 45mins and message "WSUS-patching planned downtime"
-#Invoke-WebRequest -Uri "https://ffm04mannws13p/INFMON01/check_mk/view.py?_do_confirm=Yes&_do_actions=yes&_transid=-1&view_name=hoststatus&site=&_ack_sticky=on&_ack_otify=off&output_format=JSON&_username=automation&_secret=504804f8-7ef3-47bc-90dc-553bee370d86&_down_comment=WSUS-patching%planned%downtime&_down_from_now=From+now+for&_down_minutes=45&host=$checkmkHost"
 #Put the Host in Maintenance Mode in CheckMK for 90mins and message "WSUS-patching planned downtime"
 Invoke-WebRequest -Uri "https://ffm04mannws13p/INFMON01/check_mk/view.py?_do_confirm=Yes&_do_actions=yes&_transid=-1&view_name=hoststatus&site=&_ack_sticky=on&_ack_otify=off&output_format=JSON&_username=automation&_secret=504804f8-7ef3-47bc-90dc-553bee370d86&_down_comment=WSUS-patching%planned%downtime&_down_from_now=From+now+for&_down_minutes=90&host=$checkmkHost"
 
@@ -284,13 +286,11 @@ Start-Sleep -Seconds 120
 appde-stop-nssm-services 
 Start-Sleep -Seconds 120
 
-
 #Run Patch install
-Install-WindowsUpdate -AcceptAll -Install -AutoReboot  | Out-File "C:\temp\wsus\wsus_logs\$FQDN-$(get-date -f dd-MM-yyyy)-WindowsUpdate.log" -force
+Install-WindowsUpdate -AcceptAll -Install -AutoReboot  | Out-File "C:\temp\wsus\$FQDN-$(get-date -f dd-MM-yyyy)-WindowsUpdate.log" -force
 
-#Purge logs older than 180 day(s)
-$Pathlog = "C:\temp\wsus\wsus_logs"
-$Daysback = "-180"
-$CurrentDate = Get-Date
-$DatetoDelete = $CurrentDate.AddDays($Daysback)
-Get-ChildItem $Pathlog | Where-Object { $_.LastWriteTime -lt $DatetoDelete } | Remove-Item
+#Reboot the Server if not rebooted by update module after 45 mins.
+Start-Sleep -Seconds 2700
+
+#Reboot Server
+Restart-Computer

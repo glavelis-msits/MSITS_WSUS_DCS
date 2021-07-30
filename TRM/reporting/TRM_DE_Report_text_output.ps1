@@ -1,26 +1,8 @@
-<# param([switch]$Elevated)
-
-function Test-Admin {
-  $currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
-  $currentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
-}
-
-if ((Test-Admin) -eq $false)  {
-    if ($elevated) 
-    {
-        # tried to elevate, did not work, aborting
-    } 
-    else {
-        Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -noexit -file "{0}" -elevated' -f ($myinvocation.MyCommand.Definition))
-}
-
-exit
-}
-
-'Running with Elevated Admin privileges' #>
-
 # Determine running dir
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path 
+
+$ErrorActionPreference = 'Continue'
+
 
 # Create Serverlist
 function TRMserverlist {
@@ -108,7 +90,7 @@ Write-Output $result | Format-Table -AutoSize
 #$reportstart = (Get-Date)
 #TRMserverlist                                                                                              #Create Servelist
 #Get-UpTimeAllServer                                                                                       #Debug Mode
-Get-UpTimeAllServer | Out-File "$ScriptDir\reporting\$(get-date -f dd-MM-yyyy)-TRM_DE_ServerReport.log" -force  #Output Report
+Get-UpTimeAllServer | Out-File "$ScriptDir\reporting\"$ScriptDir\reporting\TRM_DE_Report-$(get-date -f dd-MM-yyyy).html" #Output Report
 #rm "$ScriptDir\TRM_DE_ServerList_temp.txt" -force                                                          #Remove list (upkeep)
 # Get End Time
 #$reportend = (Get-Date)

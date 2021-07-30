@@ -31,16 +31,13 @@ Write-Verbose "MSITS Decentral APP-DC Powershell 5.1 deployment"
 
 
 Function DeployPowershell51 {
-$checkmkHost = (Get-ItemProperty -path 'HKLM:\SOFTWARE\WoW6432Node\Microsoft\RebootByMGS').CheckMKObject
-
-Invoke-WebRequest -Uri "https://ffm04mannws13p/INFMON01/check_mk/view.py?_do_confirm=Yes&_do_actions=yes&_transid=-1&view_name=hoststatus&site=&_ack_sticky=on&_ack_otify=off&output_format=JSON&_username=automation&_secret=504804f8-7ef3-47bc-90dc-553bee370d86&_down_comment=WSUS-patching%planned%downtime&_down_from_now=From+now+for&_down_minutes=45&host=$checkmkHost"
-
-Start-Sleep -Seconds 30
-
-wusa.exe 'C:\tasks\Win8.1AndW2K12R2-KB3191564-x64.msu' /quiet
-
-Shutdown -r -t 180 /c "Powershell 5.1 Upgrade reconfiguration."
-
+$File = "C:\tasks\Win8.1AndW2K12R2-KB3191564-x64.msu"
+C:\Windows\System32\wusa.exe $File /extract:"C:\Temp\"
+sleep 5 # extracting isn't instant, so need to wait for it to complete, otherwise next line will return no results.
+$cabs = Get-Childitem "C:\Temp\*.cab" # Luckily the CABs are ordered alphabetically, so in the correct order to install.
+Foreach ($cab in $cabs){
+Dism.exe /online /add-package /packagepath:$cab
+}
 }
 
 function appde-stop-services {
@@ -79,11 +76,15 @@ $services = 'PPX_Controller', 'StoreAgent', 'wildfly'
 }
 }
 
+$checkmkHost = (Get-ItemProperty -path 'HKLM:\SOFTWARE\WoW6432Node\Microsoft\RebootByMGS').CheckMKObject
 
-
+Invoke-WebRequest -Uri "https://ffm04mannws13p/INFMON01/check_mk/view.py?_do_confirm=Yes&_do_actions=yes&_transid=-1&view_name=hoststatus&site=&_ack_sticky=on&_ack_otify=off&output_format=JSON&_username=automation&_secret=504804f8-7ef3-47bc-90dc-553bee370d86&_down_comment=WSUS-patching%planned%downtime&_down_from_now=From+now+for&_down_minutes=45&host=$checkmkHost"
 
 appde-stop-services
 Start-Sleep -Seconds 120
 appde-stop-nssm-services
 Start-Sleep -Seconds 120
+
+shutdown -r -t 200
+
 DeployPowershell51

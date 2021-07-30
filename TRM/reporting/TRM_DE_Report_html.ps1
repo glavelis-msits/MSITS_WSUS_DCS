@@ -1,6 +1,8 @@
 ################################# Provide your own path wherever it is highlighted as provide path ######################
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 
+$ErrorActionPreference = 'Continue'
+
 # Create Serverlist
 function TRMserverlist {
 Get-ADComputer -Filter 'dnshostname -like "*.mmsrg.net"' -SearchBase "OU=TRM,OU=DE,OU=Server,DC=mmsrg,DC=net" -Properties IPv4Address | Sort-Object DNSHostName -Descending | FT DNSHostName -A -HideTableHeaders | Out-File "$ScriptDir\TRM_DE_ServerList_temp_2.txt" -force ;
@@ -11,11 +13,11 @@ rm "$ScriptDir\TRM_DE_ServerList_temp_2.txt" -Force;
 rm "$ScriptDir\TRM_DE_ServerList_temp_1.txt" -Force;
 }
 
+<# #Server List selection
+$smp= Get-Content "$ScriptDir\TRM_DE_trigger.txt" # Premade list
+TRMserverlist #>
 
-TRMserverlist
-
-# Server List selection
-#$smp= Get-Content "$ScriptDir\TRM_DE_trigger.txt" # Premade list
+#Manual list
 $smp= Get-Content "$ScriptDir\TRM_DE_ServerList_temp.txt"  # Automatic list extraction 
 
 $infoObject=@()

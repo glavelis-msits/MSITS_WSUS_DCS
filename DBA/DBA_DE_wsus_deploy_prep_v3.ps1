@@ -1,29 +1,29 @@
 Clear-Host
 Write-Verbose "MSITS Decentral DBA WSUS Prerequisites deployment"
 ### Vars ###
-$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path                                	#Execution directory discovery
-$sourcePath_PSWU = "$ScriptDir\PSWindowsUpdate"                                            	#Local PSWU Module path
-$destPath_PSWU = "C:\Program Files\WindowsPowerShell\Modules"                              	#PSWU Module destination
+$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path                                				#Execution directory discovery
+$sourcePath_PSWU = "$ScriptDir\PSWindowsUpdate"                                            				#Local PSWU Module path
+$destPath_PSWU = "C:\Program Files\WindowsPowerShell\Modules"                              				#PSWU Module destination
 $sourcePath_wsus_local_update_noreboot = "$ScriptDir\Assets\DBA_DE_wsus_local_update_reboot_v12.ps1"  	#Local WSUS update script path
-$destPath_wsus_local_update_noreboot = "C:\tasks"                                          	#WSUS update path destination
-$sourcePath_W1_WSUS_Update_check_xml = "$ScriptDir\Assets\DBA_DE_W1_Test_WSUS_Monthly_Update.xml" 	#Scheduled Update Task local xml path
-$sourcePath_W2_WSUS_Update_check_xml = "$ScriptDir\Assets\DBA_DE_W2_Test_WSUS_Monthly_Update.xml" 	#Scheduled Update Task local xml path
-$sourcePath_W3_WSUS_Update_check_xml = "$ScriptDir\Assets\DBA_DE_W3_Test_WSUS_Monthly_Update.xml" 	#Scheduled Update Task local xml path
-$sourcePath_W4_WSUS_Update_check_xml = "$ScriptDir\Assets\DBA_DE_W4_Test_WSUS_Monthly_Update.xml" 	#Scheduled Update Task local xml path
-$sourcePath_Pilot_WSUS_Update_check_xml = "$ScriptDir\Assets\DBA_DE_RunOnce.xml" 					#Scheduled Update Task local xml path
-$destPath_WSUS_Update_check_xml = "C:\temp\wsus"                                           	#Scheduled Task Destination 
-$sourcePath_DBA_DE_1313_sql = "$ScriptDir\Assets\1313.sql" 										#1313 sql sourcepath
-$destPath_DBA_DE_1313_sql = "C:\tasks"     													#1313 sql destinationpath
-$sourcePath_DBA_DE_1414_sql = "$ScriptDir\Assets\1414.sql" 										#1414 sql sourcepath
-$destPath_DBA_DE_1414_sql = "C:\tasks"     													#1414 sql destinationpath
-$servers_w1 = "$ScriptDir\Waves\DBA_DE_W1_Test.txt"											#Wave 1 (Test Group) list path
-$servers_w2 = "$ScriptDir\Waves\DBA_DE_W2.txt"												#Wave 2 list path
-$servers_w3 = "$ScriptDir\Waves\DBA_DE_W3.txt"												#Wave 3 list path
-$servers_w4 = "$ScriptDir\Waves\DBA_DE_W4.txt"												#Wave 4 list path
-$servers_pilot = "$ScriptDir\Waves\DBA_DE_Pilot.txt"	
+$destPath_wsus_local_update_noreboot = "C:\tasks"                                          				#WSUS update path destination
+$sourcePath_W1_WSUS_Update_check_xml = "$ScriptDir\Assets\DBA_DE_W1_Test_WSUS_Monthly_Update.xml" 		#Scheduled Update Task local xml path
+$sourcePath_W2_WSUS_Update_check_xml = "$ScriptDir\Assets\DBA_DE_W2_Test_WSUS_Monthly_Update.xml" 		#Scheduled Update Task local xml path
+$sourcePath_W3_WSUS_Update_check_xml = "$ScriptDir\Assets\DBA_DE_W3_Test_WSUS_Monthly_Update.xml" 		#Scheduled Update Task local xml path
+$sourcePath_W4_WSUS_Update_check_xml = "$ScriptDir\Assets\DBA_DE_W4_Test_WSUS_Monthly_Update.xml" 		#Scheduled Update Task local xml path
+$sourcePath_Pilot_WSUS_Update_check_xml = "$ScriptDir\Assets\DBA_Run_Once_Update_script.xml" 			#Scheduled Update Task local xml path
+$destPath_WSUS_Update_check_xml = "C:\temp\wsus"                                           				#Scheduled Task Destination 
+$sourcePath_DBA_DE_1313_sql = "$ScriptDir\Assets\1313.sql" 												#1313 sql sourcepath
+$destPath_DBA_DE_1313_sql = "C:\tasks"     																#1313 sql destinationpath
+$sourcePath_DBA_DE_1414_sql = "$ScriptDir\Assets\1414.sql" 												#1414 sql sourcepath
+$destPath_DBA_DE_1414_sql = "C:\tasks"     																#1414 sql destinationpath
+$servers_w1 = "$ScriptDir\Waves\DBA_DE_W1_Test.txt"														#Wave 1 (Test Group) list path
+$servers_w2 = "$ScriptDir\Waves\DBA_DE_W2.txt"															#Wave 2 list path
+$servers_w3 = "$ScriptDir\Waves\DBA_DE_W3.txt"															#Wave 3 list path
+$servers_w4 = "$ScriptDir\Waves\DBA_DE_W4.txt"															#Wave 4 list path
+$servers_pilot = "$ScriptDir\Waves\DBA_DE_Pilot.txt"													#Pilot Group (also manual deployment Group)
 
-$pw = Get-Content "\\ing04wsus01p\wsus_crd\svc-tac.txt"                                     #
-$pws = ConvertTo-SecureString -String $pw -AsPlainText -Force                               #SVC-TaskAutomateCopy pass encryption
+$pw = Get-Content "\\ing04wsus01p\wsus_crd\svc-tac.txt"                                     			#
+$pws = ConvertTo-SecureString -String $pw -AsPlainText -Force                               			#SVC-TaskAutomateCopy pass encryption
 $svctac = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pws)) #
 
 
@@ -246,7 +246,7 @@ write-host "PSwindowsUpdate Module already exists" -ForegroundColor Green
 } ;
 
 # Copy PSwindowsUpdate update script   
-$DBA_DE_wsus_upd = "C:\tasks\\Assets\DBA_DE_wsus_local_update_reboot_v12.ps1"
+$DBA_DE_wsus_upd = "C:\tasks\DBA_DE_wsus_local_update_reboot_v12.ps1"
 if (Test-Path $DBA_DE_wsus_upd -PathType leaf) 
 {"WSUS update script Exists" } 
 else
@@ -312,7 +312,7 @@ write-host "PSwindowsUpdate Module already exists" -ForegroundColor Green
 
 
 # Copy PSwindowsUpdate update script   
-$DBA_DE_wsus_upd = "C:\tasks\\Assets\DBA_DE_wsus_local_update_reboot_v12.ps1"
+$DBA_DE_wsus_upd = "C:\tasks\DBA_DE_wsus_local_update_reboot_v12.ps1"
 if (Test-Path $DBA_DE_wsus_upd -PathType leaf) 
 {"WSUS update script Exists" } 
 else
@@ -383,7 +383,7 @@ write-host "PSwindowsUpdate Module already exists" -ForegroundColor Green
 
 
 # Copy PSwindowsUpdate update script   
-$DBA_DE_wsus_upd = "C:\tasks\\Assets\DBA_DE_wsus_local_update_reboot_v12.ps1"
+$DBA_DE_wsus_upd = "C:\tasks\DBA_DE_wsus_local_update_reboot_v12.ps1"
 if (Test-Path $DBA_DE_wsus_upd -PathType leaf) 
 {"WSUS update script Exists" } 
 else
@@ -453,7 +453,7 @@ write-host "PSwindowsUpdate Module already exists" -ForegroundColor Green
 
 
 # Copy PSwindowsUpdate update script   
-$DBA_DE_wsus_upd = "C:\tasks\\Assets\DBA_DE_wsus_local_update_reboot_v12.ps1"
+$DBA_DE_wsus_upd = "C:\tasks\DBA_DE_wsus_local_update_reboot_v12.ps1"
 if (Test-Path $DBA_DE_wsus_upd -PathType leaf) 
 {"WSUS update script Exists" } 
 else
@@ -514,7 +514,7 @@ write-host "PSwindowsUpdate Module already exists" -ForegroundColor Green
 
 
 # Copy PSwindowsUpdate update script   
-$DBA_DE_wsus_upd = "C:\tasks\\Assets\DBA_DE_wsus_local_update_reboot_v12_v12.ps1"
+$DBA_DE_wsus_upd = "C:\tasks\DBA_DE_wsus_local_update_reboot_v12.ps1"
 if (Test-Path $DBA_DE_wsus_upd -PathType leaf) 
 {"WSUS update script Exists" } 
 else
@@ -527,7 +527,7 @@ Get-Content $servers_w4 | ForEach-Object {
 } #>
 
 # Copy DBA_DE Schedule Task xml
-$DBA_DE_wsus_task_xml = "C:\temp\wsus\DBA_DE_RunOnce.xml"
+$DBA_DE_wsus_task_xml = "C:\temp\wsus\DBA_Run_Once_Update_script.xml"
 if (Test-Path $DBA_DE_wsus_task_xml -PathType leaf) 
 {"WSUS update Task schedule xml exists"  }
 else
@@ -553,7 +553,7 @@ else
 ##### SCHEDULED TASK CREATION #####
 #DBA_DE_WSUS_Monthly_Update
 Get-Content $servers_pilot| ForEach-Object {
-    Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy Unrestricted -Force ; Register-ScheduledTask -Xml (Get-Content "C:\temp\wsus\DBA_DE_RunOnce.xml" | Out-String) -TaskName "DBA_DE_RunOnce" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy -Password "isRIvx0Vbu5V61nEnq56" -Force}
+    Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy Unrestricted -Force ; Register-ScheduledTask -Xml (Get-Content "C:\temp\wsus\DBA_Run_Once_Update_script.xml" | Out-String) -TaskName "DBA_Run_Once_Update_script" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy -Password "isRIvx0Vbu5V61nEnq56" -Force}
 }
 }
 
