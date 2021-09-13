@@ -43,9 +43,9 @@ else
 
 { Write-Host "Solid0 is running!" -ForegroundColor Green }
 
-$solid262 = Get-Service solid262
-$solid262.WaitForStatus('Running','00:05:00')
-if ($solid262.Status -ne 'Running') 
+$solid2 = Get-Service solid0
+$solid2.WaitForStatus('Running','00:05:00')
+if ($solid2.Status -ne 'Running') 
   { Write-Warning 'Solid262 is not running!!!' }
 
 else
@@ -60,12 +60,10 @@ function fqdn {
 $FQDN = ([System.Net.Dns]::GetHostByName($ComputerName)).HostName
 if($FQDN -like '*DBAMM*') {
      $FQDN -replace  'DBAMM', 'APPMM'
-} elseif ($FQDN -like '*DBASE*')
-{
+} else {
       $FQDN -replace 'DBASE', 'APPSE'
 }
-  else {$FQDN -replace 'DBAWH', 'APPWH'
-  }
+
 }
 
 
@@ -75,6 +73,10 @@ Start-Sleep -Seconds 60
 
 solid_checks
 
+Invoke-WebRequest -Uri "https://ffm04mannws13p/INFMON01/check_mk/view.py?_do_confirm=Yes&_do_actions=yes&_transid=-1&view_name=hoststatus&site=&_ack_sticky=on&_ack_otify=off&output_format=JSON&_username=automation&_secret=504804f8-7ef3-47bc-90dc-553bee370d86&_down_comment=WSUS-patching%planned%downtime&_down_from_now=From+now+for&_down_minutes=90&host=$checkmkHost"
+
+
 Start-Sleep -Seconds 60
+
 
 Invoke-Command -ComputerName $comp -ScriptBlock {Get-Service -Name "wildfly" | Restart-Service}

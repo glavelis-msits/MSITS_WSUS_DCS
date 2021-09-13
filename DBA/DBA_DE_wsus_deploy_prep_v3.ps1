@@ -5,7 +5,9 @@ $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path                     
 $sourcePath_PSWU = "$ScriptDir\PSWindowsUpdate"                                            				#Local PSWU Module path
 $destPath_PSWU = "C:\Program Files\WindowsPowerShell\Modules"                              				#PSWU Module destination
 $sourcePath_wsus_local_update_noreboot = "$ScriptDir\Assets\DBA_DE_wsus_local_update_reboot_v12.ps1"  	#Local WSUS update script path
-$destPath_wsus_local_update_noreboot = "C:\tasks"                                          				#WSUS update path destination
+$dba_post_check = "$ScriptDir\Assets\DBA_post_reboot_actions.ps1"
+$dba_post_check_xml = "$ScriptDir\Assets\DBA Bootup check.xml"
+$tasks_destination = "C:\tasks"                                          								#WSUS update path destination
 $sourcePath_W1_WSUS_Update_check_xml = "$ScriptDir\Assets\DBA_DE_W1_Test_WSUS_Monthly_Update.xml" 		#Scheduled Update Task local xml path
 $sourcePath_W2_WSUS_Update_check_xml = "$ScriptDir\Assets\DBA_DE_W2_Test_WSUS_Monthly_Update.xml" 		#Scheduled Update Task local xml path
 $sourcePath_W3_WSUS_Update_check_xml = "$ScriptDir\Assets\DBA_DE_W3_Test_WSUS_Monthly_Update.xml" 		#Scheduled Update Task local xml path
@@ -250,7 +252,7 @@ $DBA_DE_wsus_upd = "C:\tasks\DBA_DE_wsus_local_update_reboot_v12.ps1"
 if (Test-Path $DBA_DE_wsus_upd -PathType leaf) 
 {"WSUS update script Exists" } 
 else
-{copy-item -Path $sourcePath_wsus_local_update_noreboot -Destination $destPath_wsus_local_update_noreboot -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
+{copy-item -Path $sourcePath_wsus_local_update_noreboot -Destination $tasks_destination -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
 
 
 <# # Force PSwindowsUpdate Module Copy
@@ -316,7 +318,7 @@ $DBA_DE_wsus_upd = "C:\tasks\DBA_DE_wsus_local_update_reboot_v12.ps1"
 if (Test-Path $DBA_DE_wsus_upd -PathType leaf) 
 {"WSUS update script Exists" } 
 else
-{copy-item -Path $sourcePath_wsus_local_update_noreboot -Destination $destPath_wsus_local_update_noreboot -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
+{copy-item -Path $sourcePath_wsus_local_update_noreboot -Destination $tasks_destination -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
 
 <# # Force PSwindowsUpdate Module Copy
 Get-Content $servers_w2 | ForEach-Object {
@@ -387,7 +389,7 @@ $DBA_DE_wsus_upd = "C:\tasks\DBA_DE_wsus_local_update_reboot_v12.ps1"
 if (Test-Path $DBA_DE_wsus_upd -PathType leaf) 
 {"WSUS update script Exists" } 
 else
-{copy-item -Path $sourcePath_wsus_local_update_noreboot -Destination $destPath_wsus_local_update_noreboot -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
+{copy-item -Path $sourcePath_wsus_local_update_noreboot -Destination $tasks_destination -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
 
 <# # Force PSwindowsUpdate Module Copy
 Get-Content $servers_w3 | ForEach-Object {
@@ -457,7 +459,7 @@ $DBA_DE_wsus_upd = "C:\tasks\DBA_DE_wsus_local_update_reboot_v12.ps1"
 if (Test-Path $DBA_DE_wsus_upd -PathType leaf) 
 {"WSUS update script Exists" } 
 else
-{copy-item -Path $sourcePath_wsus_local_update_noreboot -Destination $destPath_wsus_local_update_noreboot -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
+{copy-item -Path $sourcePath_wsus_local_update_noreboot -Destination $tasks_destination -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
 
 <# # Force PSwindowsUpdate Module Copy
 Get-Content $servers_w4 | ForEach-Object {
@@ -518,13 +520,27 @@ $DBA_DE_wsus_upd = "C:\tasks\DBA_DE_wsus_local_update_reboot_v12.ps1"
 if (Test-Path $DBA_DE_wsus_upd -PathType leaf) 
 {"WSUS update script Exists" } 
 else
-{copy-item -Path $sourcePath_wsus_local_update_noreboot -Destination $destPath_wsus_local_update_noreboot -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
+{copy-item -Path $sourcePath_wsus_local_update_noreboot -Destination $tasks_destination -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
 
 <# # Force PSwindowsUpdate Module Copy
 Get-Content $servers_w4 | ForEach-Object {
     $Session = New-PSSession -ComputerName "$_" ;
     copy-item -Path $sourcePath_PSWU -Destination $destPath_PSWU -recurse -ToSession $Session -Force
 } #>
+
+#Copy DBA post reboot check script
+if (Test-Path "C:\tasks\Win8.1AndW2K12R2-KB3191564-x64.msu" -PathType leaf) 
+{"Powershell Installation script Exists" } 
+else
+{copy-item -Path $dba_post_check -Destination $tasks_destination -recurse -ToSession $Session -ErrorAction SilentlyContinue};
+
+#Copy DBA post reboot check xml
+if (Test-Path "C:\tasks\Win8.1AndW2K12R2-KB3191564-x64.msu" -PathType leaf) 
+{"Powershell Installation script Exists" } 
+else
+{copy-item -Path $dba_post_check_xml -Destination $destPath_WSUS_Update_check_xml -recurse -ToSession $Session -ErrorAction SilentlyContinue};
+	
+
 
 # Copy DBA_DE Schedule Task xml
 $DBA_DE_wsus_task_xml = "C:\temp\wsus\DBA_Run_Once_Update_script.xml"
@@ -535,19 +551,18 @@ else
 
 
 # Copy 1313 SQL script	
-$DBA_DE_1313_sql_path = "C:\tasks\1313.sql"
+$DBA_DE_1313_sql_path = "\\$_\C$\tasks\1313.sql"
 if (Test-Path $DBA_DE_1313_sql_path -PathType leaf) 
 {"1313 SQL script exists" } 
 else
 {copy-item -Path $sourcePath_DBA_DE_1313_sql -Destination $destPath_DBA_DE_1313_sql -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
 
 # Copy 1414 SQL script	
-$DBA_DE_1414_sql_path = "C:\tasks\1414.sql"
+$DBA_DE_1414_sql_path = "\\$_\C$\tasks\1414.sql"
 if (Test-Path $DBA_DE_1414_sql_path -PathType leaf) 
 {"1414 SQL script exists" } 
 else
 {copy-item -Path $sourcePath_DBA_DE_1414_sql -Destination $destPath_DBA_DE_1414_sql -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
-
 }
 
 ##### SCHEDULED TASK CREATION #####
@@ -555,6 +570,12 @@ else
 Get-Content $servers_pilot| ForEach-Object {
     Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy Unrestricted -Force ; Register-ScheduledTask -Xml (Get-Content "C:\temp\wsus\DBA_Run_Once_Update_script.xml" | Out-String) -TaskName "DBA_Run_Once_Update_script" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy -Password "isRIvx0Vbu5V61nEnq56" -Force}
 }
+
+# DBA post boot action
+Get-Content $servers_pilot| ForEach-Object {
+    Invoke-Command -ComputerName "$_" -ScriptBlock {Set-ExecutionPolicy Unrestricted -Force ; Register-ScheduledTask -Xml (Get-Content "C:\temp\wsus\DBA Bootup check.xml" | Out-String) -TaskName "DBA Bootup check" -TaskPath "\" -User mmsrg\SVC-TaskAutomateCopy -Password "isRIvx0Vbu5V61nEnq56" -Force}
+}
+
 }
 
 

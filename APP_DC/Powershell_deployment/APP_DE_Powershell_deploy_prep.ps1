@@ -35,15 +35,15 @@ $Session = New-PSSession -ComputerName "$_" ;
 	
 	
 	# Copy WPF 51 Update
-if (Test-Path $destinationpowershell51 -PathType leaf) 
-{"Win8.1AndW2K12R2-KB3191564-x64.msu already Exists"  } 
+if (Test-Path "\\$_\C$\tasks\Win8.1AndW2K12R2-KB3191564-x64.msu" -PathType leaf) 
+{write-host "Win8.1AndW2K12R2-KB3191564-x64.msu already Exists" -ForegroundColor Green} 
 else
 {copy-item -Path $sourcepowershell51 -Destination $dest_tasks -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
     
 # Copy PSwindowsUpdate update script   
-$app_de_wsus_upd = "C:\tasks\APP_Powershell_installation_reboot_dism.ps1"
+$app_de_wsus_upd = "\\$_\C$\tasks\APP_Powershell_installation_reboot_dism.ps1"
 if (Test-Path $app_de_wsus_upd -PathType leaf) 
-{"Powershell Installation script Exists" } 
+{write-host "Powershell Installation script Exists" -ForegroundColor Green } 
 else
 {copy-item -Path $source_psinstall -Destination $dest_tasks -recurse -ToSession $Session -ErrorAction SilentlyContinue} ;
 
